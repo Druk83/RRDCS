@@ -1,0 +1,39 @@
+﻿@startuml ContextMap_quality-gate-orchestration
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+title Карта контекстов (Context Map): Оркестрация проверок качества (Quality Gate Orchestration)
+
+skinparam component {
+    BackgroundColor<<Core>> #FFF59D
+    BackgroundColor<<Supporting>> #B3E5FC
+    BackgroundColor<<External>> #F8BBD9
+    BackgroundColor<<ACL>> #FFCC80
+}
+
+component "BC: Оркестрация проверок качества\n(Quality Gate Orchestration)" as QGO <<Core>>
+component "BC: Управление политиками\nи цепочкой инструментов\n(Policy and Toolchain Governance)" as GOV <<Supporting>>
+component "BC: Пакеты проверок\n(Verification Packages)" as VP <<Supporting>>
+component "BC: Отчетность и доказательная база\n(Reporting and Evidence)" as RE <<Supporting>>
+component "Внешняя система: API pull request в GitHub\n(GitHub Pull Request API)" as GH <<External>>
+component "ACL: Адаптер событий PR\n(PR Event Adapter)" as ACL1 <<ACL>>
+
+GH -[#FF9800]-> ACL1
+ACL1 -[#FF9800]-> QGO : ACL
+GOV -[#1976D2,thickness=2]-> QGO : Поставщик/Потребитель (U/D)
+QGO -[#1976D2,thickness=2]-> VP : Поставщик/Потребитель (U/D)
+QGO -[#1976D2,thickness=2]-> RE : Поставщик/Потребитель (U/D)
+QGO .[#2196F3,dashed].> RE : Событие: решение о слиянии зафиксировано\n(MergeDecisionRecorded)
+VP .[#2196F3,dashed].> QGO : Событие: набор обязательных проверок завершен\n(RequiredVerificationSetCompleted)
+
+legend right
+|= Тип |= Цвет |
+| Основной контекст (Core) | Желтый |
+| Поддерживающий контекст (Supporting) | Голубой |
+| Внешняя система (External) | Розовый |
+| Слой ACL (ACL) | Оранжевый |
+endlegend
+
+@enduml
+
+

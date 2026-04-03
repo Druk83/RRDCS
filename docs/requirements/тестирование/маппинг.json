@@ -1,0 +1,108 @@
+[
+  {
+    "test_id": "T-001",
+    "level": "lint-static",
+    "suite": "suite-lint-required",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "lint-logs",
+      "checks-status"
+    ]
+  },
+  {
+    "test_id": "T-002",
+    "level": "integration-gate-flow",
+    "suite": "suite-required-pass",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "checks-summary"
+    ]
+  },
+  {
+    "test_id": "T-003",
+    "level": "integration-gate-flow",
+    "suite": "suite-parity-local-ci",
+    "execution_type": "mixed",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "local-log",
+      "ci-log",
+      "compare-report"
+    ]
+  },
+  {
+    "test_id": "T-004",
+    "level": "security-baseline",
+    "suite": "suite-security-required",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "security-findings",
+      "security-logs"
+    ]
+  },
+  {
+    "test_id": "T-005",
+    "level": "observability-evidence",
+    "suite": "suite-evidence-completeness",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "pr-summary",
+      "artifact-links"
+    ]
+  },
+  {
+    "test_id": "T-006",
+    "level": "platform-matrix",
+    "suite": "suite-platform-windows-linux",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "matrix-logs"
+    ]
+  },
+  {
+    "test_id": "T-007",
+    "level": "governance-pin-audit",
+    "suite": "suite-extensibility-check",
+    "execution_type": "mixed",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "change-diff",
+      "execution-logs"
+    ]
+  },
+  {
+    "test_id": "T-008",
+    "level": "pipeline-performance",
+    "suite": "suite-pipeline-performance",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "duration-report"
+    ]
+  },
+  {
+    "test_id": "T-009",
+    "level": "governance-pin-audit",
+    "suite": "suite-toolchain-pin-audit",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "pin-audit-report"
+    ]
+  },
+  {
+    "test_id": "T-010",
+    "level": "coverage-metrics",
+    "suite": "suite-coverage-mvp",
+    "execution_type": "auto",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "coverage-report"
+    ]
+  }
+]

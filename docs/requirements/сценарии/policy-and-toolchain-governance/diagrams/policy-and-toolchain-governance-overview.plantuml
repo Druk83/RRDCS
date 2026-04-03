@@ -1,0 +1,27 @@
+﻿@startuml policy-and-toolchain-governance-overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+title Диаграмма вариантов использования: Управление политиками и цепочкой инструментов (Policy and Toolchain Governance)
+
+actor "Разработчик (Developer)" as Dev
+actor "Технический лидер и архитектор (Tech Lead and Architect)" as Lead
+
+rectangle "Управление политиками и цепочкой инструментов (Policy and Toolchain Governance)" {
+  usecase "Предложить изменение политики (Propose Policy Change)" as UC1
+  usecase "Проверить версии и пороги (Validate Pins and Thresholds)" as UC2
+  usecase "Утвердить или отклонить изменение (Approve or Reject Change)" as UC3
+  usecase "Опубликовать политику в оркестрацию (Publish Policy to Orchestration)" as UC4
+  usecase "Опубликовать baseline в пакеты проверок (Publish Baseline to Verification)" as UC5
+}
+
+Dev --> UC1
+Lead --> UC2
+Lead --> UC3
+Lead --> UC4
+Lead --> UC5
+
+UC4 ..> UC3 : <<include>>
+UC5 ..> UC3 : <<include>>
+
+@enduml
+

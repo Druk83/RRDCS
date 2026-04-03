@@ -1,0 +1,118 @@
+﻿@startuml RRDCS_TL_ArchiMate
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam linetype polyline
+left to right direction
+
+title Технологический слой (Technology Layer) — Архитектура RRDCS
+
+skinparam rectangle {
+  BorderColor #333333
+}
+skinparam rectangle<<Node>> {
+  BackgroundColor #C9E7B7
+}
+skinparam rectangle<<Software>> {
+  BackgroundColor #C9E7B7
+}
+skinparam rectangle<<TechService>> {
+  BackgroundColor #C9E7B7
+}
+skinparam rectangle<<Interface>> {
+  BackgroundColor #C9E7B7
+}
+skinparam rectangle<<Artifact>> {
+  BackgroundColor #C9E7B7
+}
+skinparam rectangle<<ALComponent>> {
+  BackgroundColor #B5E7F0
+}
+
+rectangle "Linux-раннер GitHub\n(GitHub Linux Runner)\nTN-001" as TN001 <<Node>>
+rectangle "Windows-раннер GitHub\n(GitHub Windows Runner)\nTN-002" as TN002 <<Node>>
+rectangle "Рабочая станция разработчика\n(Developer Workstation)\nTN-003" as TN003 <<Node>>
+
+rectangle "Среда выполнения GitHub Actions\n(GitHub Actions Runtime)\nSW-001" as SW001 <<Software>>
+rectangle "Среда выполнения Python 3.12\n(Python 3.12 Runtime)\nSW-002" as SW002 <<Software>>
+rectangle "Среда выполнения PowerShell\n(PowerShell Runtime)\nSW-003" as SW003 <<Software>>
+rectangle "Среда выполнения Bash\n(Bash Runtime)\nSW-004" as SW004 <<Software>>
+rectangle "Среда выполнения Git\n(Git Runtime)\nSW-005" as SW005 <<Software>>
+
+rectangle "Сервис GitHub Checks API\n(GitHub Checks API Service)\nTS-001" as TS001 <<TechService>>
+rectangle "Сервис GitHub Artifacts\n(GitHub Artifacts Service)\nTS-002" as TS002 <<TechService>>
+rectangle "Сервис GitHub Actions Cache\n(GitHub Actions Cache Service)\nTS-003" as TS003 <<TechService>>
+rectangle "Сервис Git-репозитория\n(Git Repository Service)\nTS-004" as TS004 <<TechService>>
+
+rectangle "Интерфейс webhook/событий PR\n(PR Webhook/Event Interface)\nTIF-001" as TIF001 <<Interface>>
+rectangle "Интерфейс загрузки артефактов\n(Artifact Upload Interface)\nTIF-002" as TIF002 <<Interface>>
+rectangle "Интерфейс доступа к кэшу\n(Cache Access Interface)\nTIF-003" as TIF003 <<Interface>>
+
+rectangle "Файлы workflow YAML\n(Workflow YAML Artifacts)\nAR-001" as AR001 <<Artifact>>
+rectangle "Скрипты проверок\n(Verification Scripts)\nAR-002" as AR002 <<Artifact>>
+rectangle "Манифесты политик\n(Policy Manifests)\nAR-003" as AR003 <<Artifact>>
+rectangle "Артефакты верификации\n(Verification Artifacts)\nAR-004" as AR004 <<Artifact>>
+
+rectangle "Оркестратор workflow\n(Workflow Orchestrator)\nAC-001" as AC001 <<ALComponent>>
+rectangle "Разрешатель политик\n(Policy Resolver)\nAC-002" as AC002 <<ALComponent>>
+rectangle "Исполнитель пакетов проверок\n(Verification Runner)\nAC-003" as AC003 <<ALComponent>>
+rectangle "Движок решения о слиянии\n(Merge Decision Engine)\nAC-004" as AC004 <<ALComponent>>
+rectangle "Публикатор доказательств\n(Evidence Publisher)\nAC-005" as AC005 <<ALComponent>>
+rectangle "Локальный CLI предварительной проверки\n(Local Pre-check CLI `check-all`)\nAC-006" as AC006 <<ALComponent>>
+
+SW001 -[#000000,thickness=2]-> TN001 : assignment
+SW001 -[#000000,thickness=2]-> TN002 : assignment
+SW002 -[#000000,thickness=2]-> TN001 : assignment
+SW002 -[#000000,thickness=2]-> TN002 : assignment
+SW002 -[#000000,thickness=2]-> TN003 : assignment
+SW003 -[#000000,thickness=2]-> TN002 : assignment
+SW003 -[#000000,thickness=2]-> TN003 : assignment
+SW004 -[#000000,thickness=2]-> TN001 : assignment
+SW004 -[#000000,thickness=2]-> TN003 : assignment
+SW005 -[#000000,thickness=2]-> TN001 : assignment
+SW005 -[#000000,thickness=2]-> TN002 : assignment
+SW005 -[#000000,thickness=2]-> TN003 : assignment
+
+TS001 -[#4CAF50,thickness=2]-> AC001 : serving
+TS001 -[#4CAF50,thickness=2]-> AC004 : serving
+TS002 -[#4CAF50,thickness=2]-> AC005 : serving
+TS003 -[#4CAF50,thickness=2]-> AC003 : serving
+TS004 -[#4CAF50,thickness=2]-> AC001 : serving
+TS004 -[#4CAF50,thickness=2]-> AC002 : serving
+TS004 -[#4CAF50,thickness=2]-> AC006 : serving
+
+TS001 -[#FFA500,thickness=2,dashed]-> TIF001 : realization
+TS002 -[#FFA500,thickness=2,dashed]-> TIF002 : realization
+TS003 -[#FFA500,thickness=2,dashed]-> TIF003 : realization
+
+TIF001 -[#4CAF50,thickness=2]-> AC001 : serving
+TIF002 -[#4CAF50,thickness=2]-> AC005 : serving
+TIF003 -[#4CAF50,thickness=2]-> AC003 : serving
+
+AR001 -[#FFA500,thickness=2,dashed]-> AC001 : realization
+AR002 -[#FFA500,thickness=2,dashed]-> AC003 : realization
+AR002 -[#FFA500,thickness=2,dashed]-> AC006 : realization
+AR003 -[#FFA500,thickness=2,dashed]-> AC002 : realization
+AR003 -[#FFA500,thickness=2,dashed]-> AC006 : realization
+AR004 -[#FFA500,thickness=2,dashed]-> AC005 : realization
+
+TN001 -[#000000,thickness=2]-> AR001 : assignment
+TN001 -[#000000,thickness=2]-> AR002 : assignment
+TN001 -[#000000,thickness=2]-> AR003 : assignment
+TN001 -[#000000,thickness=2]-> AR004 : assignment
+TN002 -[#000000,thickness=2]-> AR001 : assignment
+TN002 -[#000000,thickness=2]-> AR002 : assignment
+TN002 -[#000000,thickness=2]-> AR003 : assignment
+TN002 -[#000000,thickness=2]-> AR004 : assignment
+TN003 -[#000000,thickness=2]-> AR002 : assignment
+TN003 -[#000000,thickness=2]-> AR003 : assignment
+
+legend right
+|= Тип связи |= Значение |
+| assignment | Размещение ПО/артефактов на узлах |
+| serving | Технологический сервис/интерфейс обслуживает AL-компонент |
+| realization | Артефакт или сервис реализует интерфейс/компонент |
+endlegend
+
+@enduml

@@ -1,0 +1,36 @@
+﻿@startuml ContextMap_reporting-and-evidence
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+title Карта контекстов (Context Map): Отчетность и доказательная база (Reporting and Evidence)
+
+skinparam component {
+    BackgroundColor<<Core>> #FFF59D
+    BackgroundColor<<Supporting>> #B3E5FC
+    BackgroundColor<<External>> #F8BBD9
+    BackgroundColor<<ACL>> #FFCC80
+}
+
+component "BC: Отчетность и доказательная база\n(Reporting and Evidence)" as RE <<Core>>
+component "BC: Оркестрация проверок качества\n(Quality Gate Orchestration)" as QGO <<Supporting>>
+component "BC: Пакеты проверок\n(Verification Packages)" as VP <<Supporting>>
+component "Внешняя система: Интерфейс PR / Хранилище артефактов\n(PR UI / Artifact Storage)" as UI <<External>>
+component "ACL: Нормализатор сводки\n(Summary Normalizer)" as ACL1 <<ACL>>
+
+QGO -[#1976D2,thickness=2]-> RE : Поставщик/Потребитель (U/D)
+VP -[#1976D2,thickness=2]-> RE : Поставщик/Потребитель (U/D)
+RE -[#4CAF50]-> UI : Открытый сервис / Публичный язык (OHS/PL)
+QGO .[#2196F3,dashed].> RE : Событие: завершение gate-запуска\n(GateRunCompleted)
+VP .[#2196F3,dashed].> RE : Событие: детали верификации доступны\n(VerificationDetailsAvailable)
+RE -[#FF9800]-> ACL1 : ACL
+ACL1 -[#FF9800]-> UI
+
+legend right
+|= Тип |= Цвет |
+| Основной контекст (Core) | Желтый |
+| Поддерживающий контекст (Supporting) | Голубой |
+| Внешняя система (External) | Розовый |
+| Слой ACL (ACL) | Оранжевый |
+endlegend
+
+@enduml

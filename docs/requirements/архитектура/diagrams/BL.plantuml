@@ -1,0 +1,105 @@
+﻿@startuml RRDCS_BL_ArchiMate
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam linetype polyline
+left to right direction
+
+title Бизнес-слой (Business Layer) — Архитектура RRDCS
+
+skinparam rectangle {
+  BorderColor #333333
+}
+skinparam rectangle<<Actor>> {
+  BackgroundColor #FFFACD
+}
+skinparam rectangle<<Role>> {
+  BackgroundColor #FFFACD
+}
+skinparam rectangle<<Process>> {
+  BackgroundColor #FFFACD
+}
+skinparam rectangle<<Service>> {
+  BackgroundColor #FFFACD
+}
+skinparam rectangle<<Object>> {
+  BackgroundColor #FFFACD
+}
+skinparam rectangle<<Event>> {
+  BackgroundColor #FFFACD
+}
+
+rectangle "Разработчик\n(Developer)\nBA-001" as BA001 <<Actor>>
+rectangle "Технический лидер и архитектор\n(Tech Lead and Architect)\nBA-002" as BA002 <<Actor>>
+rectangle "Система непрерывной интеграции\n(Continuous Integration System)\nBA-003" as BA003 <<Actor>>
+
+rectangle "Инициатор изменения\n(Change Initiator)\nBR-001" as BR001 <<Role>>
+rectangle "Владелец политик\n(Policy Owner)\nBR-002" as BR002 <<Role>>
+rectangle "Исполнитель проверок\n(Verification Executor)\nBR-003" as BR003 <<Role>>
+rectangle "Аналитик доказательств\n(Evidence Reviewer)\nBR-004" as BR004 <<Role>>
+
+rectangle "Управление политиками и фиксацией toolchain\n(Policy and Toolchain Pin Governance)\nBP-001" as BP001 <<Process>>
+rectangle "Оркестрация обязательных проверок PR\n(Pull Request Required Checks Orchestration)\nBP-002" as BP002 <<Process>>
+rectangle "Выполнение базового набора проверок\n(Baseline Verification Set Execution)\nBP-003" as BP003 <<Process>>
+rectangle "Публикация сводки и доказательств\n(Summary and Evidence Publication)\nBP-004" as BP004 <<Process>>
+
+rectangle "Сервис управления политиками\n(Policy Governance Service)\nBS-001" as BS001 <<Service>>
+rectangle "Сервис качественных ворот\n(Quality Gate Service)\nBS-002" as BS002 <<Service>>
+rectangle "Сервис верификации\n(Verification Service)\nBS-003" as BS003 <<Service>>
+rectangle "Сервис отчетности и доказательств\n(Reporting and Evidence Service)\nBS-004" as BS004 <<Service>>
+
+rectangle "PR обновлен\n(Pull Request Updated)\nBE-001" as BE001 <<Event>>
+rectangle "План обязательных проверок определен\n(Required Check Plan Resolved)\nBE-002" as BE002 <<Event>>
+rectangle "Набор проверок завершен\n(Required Verification Set Completed)\nBE-003" as BE003 <<Event>>
+rectangle "Решение по слиянию зафиксировано\n(Merge Decision Recorded)\nBE-004" as BE004 <<Event>>
+rectangle "Обязательная проверка завершилась ошибкой\n(Required Check Failed)\nBE-005" as BE005 <<Event>>
+
+rectangle "Манифесты политик\n(Policy Manifests)\nBO-001" as BO001 <<Object>>
+rectangle "Снимок плана проверок\n(Check Plan Snapshot)\nBO-002" as BO002 <<Object>>
+rectangle "Журнал решений по governance\n(Governance Decisions Log)\nBO-003" as BO003 <<Object>>
+rectangle "События запусков проверок\n(Check Run Events)\nBO-004" as BO004 <<Object>>
+rectangle "Артефакты верификации\n(Verification Artifacts)\nBO-005" as BO005 <<Object>>
+rectangle "Сводки запусков\n(Run Summaries)\nBO-006" as BO006 <<Object>>
+
+BA001 -[#000000,thickness=2]-> BR001 : assignment
+BA002 -[#000000,thickness=2]-> BR002 : assignment
+BA003 -[#000000,thickness=2]-> BR003 : assignment
+BA001 -[#000000,thickness=2]-> BR004 : assignment
+BA002 -[#000000,thickness=2]-> BR004 : assignment
+
+BR001 -[#000000,thickness=2]-> BP002 : assignment
+BR002 -[#000000,thickness=2]-> BP001 : assignment
+BR003 -[#000000,thickness=2]-> BP003 : assignment
+BR004 -[#000000,thickness=2]-> BP004 : assignment
+
+BE001 -[#FF6B6B,thickness=2,dashed]-> BP002 : triggering
+BP002 -[#FF6B6B,thickness=2,dashed]-> BE002 : triggering
+BE002 -[#FF6B6B,thickness=2,dashed]-> BP003 : triggering
+BP003 -[#FF6B6B,thickness=2,dashed]-> BE003 : triggering
+BP003 -[#FF6B6B,thickness=2,dashed]-> BE005 : triggering
+BE003 -[#FF6B6B,thickness=2,dashed]-> BP004 : triggering
+BE005 -[#FF6B6B,thickness=2,dashed]-> BP004 : triggering
+BP004 -[#FF6B6B,thickness=2,dashed]-> BE004 : triggering
+
+BP001 -[#FFA500,thickness=2,dashed]-> BS001 : realization
+BP002 -[#FFA500,thickness=2,dashed]-> BS002 : realization
+BP003 -[#FFA500,thickness=2,dashed]-> BS003 : realization
+BP004 -[#FFA500,thickness=2,dashed]-> BS004 : realization
+
+BP001 -[#2196F3,thickness=2]-> BO001 : access
+BP001 -[#2196F3,thickness=2]-> BO003 : access
+BP002 -[#2196F3,thickness=2]-> BO002 : access
+BP003 -[#2196F3,thickness=2]-> BO004 : access
+BP003 -[#2196F3,thickness=2]-> BO005 : access
+BP004 -[#2196F3,thickness=2]-> BO006 : access
+
+legend right
+|= Тип связи |= Значение |
+| assignment | Назначение роли/исполнителя |
+| realization | Реализация сервиса процессом |
+| triggering | Инициирование процесса событием |
+| access | Доступ процесса к объекту |
+endlegend
+
+@enduml

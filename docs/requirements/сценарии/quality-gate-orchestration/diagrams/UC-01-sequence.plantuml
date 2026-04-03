@@ -1,0 +1,30 @@
+﻿@startuml UC_01_sequence
+!theme plain
+skinparam backgroundColor #FFFFFF
+title Сценарий UC-01: Решение по качественным воротам (quality gate) для PR (Pull Request Quality Gate Decision)
+
+actor "Разработчик (Developer)" as Dev
+participant "API pull request в GitHub (GitHub Pull Request API)" as GH
+participant "BC Оркестрация проверок качества (Quality Gate Orchestration BC)" as QGO
+participant "BC Управление политиками и цепочкой инструментов (Policy and Toolchain Governance BC)" as GOV
+participant "BC Пакеты проверок (Verification Packages BC)" as VP
+participant "BC Отчетность и доказательная база (Reporting and Evidence BC)" as RE
+
+Dev -> GH : Создать/обновить PR (Create/Update PR)
+GH -> QGO : EVT Обновление PR (PullRequestUpdated)
+QGO -> GOV : CMD Получить план обязательных проверок (ResolveRequiredCheckPlan)
+GOV --> QGO : EVT План обязательных проверок сформирован (RequiredCheckPlanResolved)
+QGO -> VP : CMD Запустить набор обязательных проверок (RunRequiredVerificationSet)
+VP --> QGO : EVT Набор обязательных проверок завершен (RequiredVerificationSetCompleted)
+
+alt Все обязательные проверки пройдены (All required checks passed)
+  QGO -> GH : Установить статус: слияние разрешено (merge allowed)
+  QGO -> RE : CMD Опубликовать итог проверки: разрешено (PublishGateOutcome: allowed)
+else Есть хотя бы одна упавшая проверка (At least one check failed)
+  QGO -> GH : Установить статус: слияние заблокировано (merge blocked)
+  QGO -> RE : CMD Опубликовать итог проверки: заблокировано (PublishGateOutcome: blocked)
+end
+
+QGO --> GH : EVT Решение о слиянии зафиксировано (MergeDecisionRecorded)
+@enduml
+

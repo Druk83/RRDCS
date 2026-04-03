@@ -1,0 +1,27 @@
+﻿@startuml quality-gate-orchestration-overview
+!theme plain
+skinparam backgroundColor #FFFFFF
+title Диаграмма вариантов использования: Оркестрация проверок качества (Quality Gate Orchestration)
+
+actor "Разработчик (Developer)" as Dev
+actor "Система непрерывной интеграции (Continuous Integration System)" as CI
+
+rectangle "Оркестрация проверок качества (Quality Gate Orchestration)" {
+  usecase "Создать или обновить PR (Create or Update PR)" as UC1
+  usecase "Получить план обязательных проверок (Resolve Required Check Plan)" as UC2
+  usecase "Запустить набор обязательных проверок (Run Required Verification Set)" as UC3
+  usecase "Зафиксировать решение по слиянию (Record Merge Decision)" as UC4
+  usecase "Опубликовать итог проверки (Publish Gate Outcome)" as UC5
+}
+
+Dev --> UC1
+CI --> UC2
+CI --> UC3
+CI --> UC4
+CI --> UC5
+
+UC3 ..> UC2 : <<include>>
+UC5 ..> UC4 : <<include>>
+
+@enduml
+

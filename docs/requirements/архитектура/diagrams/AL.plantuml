@@ -1,0 +1,131 @@
+﻿@startuml RRDCS_AL_ArchiMate
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam linetype polyline
+left to right direction
+
+title Прикладной слой (Application Layer) — Архитектура RRDCS
+
+skinparam rectangle {
+  BorderColor #333333
+}
+skinparam rectangle<<Component>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<Service>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<Interface>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<Process>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<Event>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<DataObject>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<BLService>> {
+  BackgroundColor #FFFACD
+}
+
+rectangle "Оркестратор workflow\n(Workflow Orchestrator)\nAC-001" as AC001 <<Component>>
+rectangle "Разрешатель политик\n(Policy Resolver)\nAC-002" as AC002 <<Component>>
+rectangle "Исполнитель пакетов проверок\n(Verification Runner)\nAC-003" as AC003 <<Component>>
+rectangle "Движок решения о слиянии\n(Merge Decision Engine)\nAC-004" as AC004 <<Component>>
+rectangle "Публикатор доказательств\n(Evidence Publisher)\nAC-005" as AC005 <<Component>>
+rectangle "Локальный CLI предварительной проверки\n(Local Pre-check CLI `check-all`)\nAC-006" as AC006 <<Component>>
+
+rectangle "Сервис разрешения плана проверок\n(Check Plan Resolution Service)\nAS-001" as AS001 <<Service>>
+rectangle "Сервис выполнения проверок\n(Verification Execution Service)\nAS-002" as AS002 <<Service>>
+rectangle "Сервис решения о слиянии\n(Merge Decision Service)\nAS-003" as AS003 <<Service>>
+rectangle "Сервис публикации доказательств\n(Evidence Publication Service)\nAS-004" as AS004 <<Service>>
+
+rectangle "Интерфейс событий PR\n(PR Event Interface)\nAI-001" as AI001 <<Interface>>
+rectangle "Интерфейс манифестов политик\n(Policy Manifest Interface)\nAI-002" as AI002 <<Interface>>
+rectangle "Интерфейс пакетов проверок\n(Verification Package Interface)\nAI-003" as AI003 <<Interface>>
+rectangle "Интерфейс отчетности\n(Reporting Interface)\nAI-004" as AI004 <<Interface>>
+rectangle "Интерфейс локального CLI\n(Local CLI Interface)\nAI-005" as AI005 <<Interface>>
+
+rectangle "Обработка события PR\n(Process PR Event)\nAP-001" as AP001 <<Process>>
+rectangle "Разрешение обязательных проверок\n(Resolve Required Checks)\nAP-002" as AP002 <<Process>>
+rectangle "Запуск набора проверок\n(Run Verification Set)\nAP-003" as AP003 <<Process>>
+rectangle "Расчет решения о слиянии\n(Calculate Merge Decision)\nAP-004" as AP004 <<Process>>
+rectangle "Публикация доказательств\n(Publish Evidence)\nAP-005" as AP005 <<Process>>
+
+rectangle "Событие PR получено\n(PR Event Received)\nAE-001" as AE001 <<Event>>
+rectangle "План обязательных проверок разрешен\n(Required Plan Resolved)\nAE-002" as AE002 <<Event>>
+rectangle "Набор проверок завершен\n(Verification Set Completed)\nAE-003" as AE003 <<Event>>
+rectangle "Решение о слиянии рассчитано\n(Merge Decision Calculated)\nAE-004" as AE004 <<Event>>
+rectangle "Доказательства опубликованы\n(Evidence Published)\nAE-005" as AE005 <<Event>>
+
+rectangle "Манифесты политик\n(Policy Manifests)\nDO-001" as DO001 <<DataObject>>
+rectangle "Снимок плана проверок\n(Check Plan Snapshot)\nDO-002" as DO002 <<DataObject>>
+rectangle "Журнал решений по governance\n(Governance Decisions Log)\nDO-003" as DO003 <<DataObject>>
+rectangle "События запусков проверок\n(Check Run Events)\nDO-004" as DO004 <<DataObject>>
+rectangle "Артефакты верификации\n(Verification Artifacts)\nDO-005" as DO005 <<DataObject>>
+rectangle "Сводки запусков\n(Run Summaries)\nDO-006" as DO006 <<DataObject>>
+rectangle "CI-кэш\n(CI Cache)\nDO-007" as DO007 <<DataObject>>
+
+rectangle "Сервис управления политиками\n(Policy Governance Service)\nBS-001" as BS001 <<BLService>>
+rectangle "Сервис качественных ворот\n(Quality Gate Service)\nBS-002" as BS002 <<BLService>>
+rectangle "Сервис верификации\n(Verification Service)\nBS-003" as BS003 <<BLService>>
+rectangle "Сервис отчетности и доказательств\n(Reporting and Evidence Service)\nBS-004" as BS004 <<BLService>>
+
+AC001 -[#FFA500,thickness=2,dashed]-> AS001 : realization
+AC002 -[#FFA500,thickness=2,dashed]-> AS001 : realization
+AC003 -[#FFA500,thickness=2,dashed]-> AS002 : realization
+AC006 -[#FFA500,thickness=2,dashed]-> AS002 : realization
+AC004 -[#FFA500,thickness=2,dashed]-> AS003 : realization
+AC005 -[#FFA500,thickness=2,dashed]-> AS004 : realization
+
+AC001 -[#FFA500,thickness=2,dashed]-> AI001 : realization
+AC002 -[#FFA500,thickness=2,dashed]-> AI002 : realization
+AC003 -[#FFA500,thickness=2,dashed]-> AI003 : realization
+AC005 -[#FFA500,thickness=2,dashed]-> AI004 : realization
+AC006 -[#FFA500,thickness=2,dashed]-> AI005 : realization
+
+AI001 -[#4CAF50,thickness=2]-> AP001 : serving
+AI002 -[#4CAF50,thickness=2]-> AP002 : serving
+AI003 -[#4CAF50,thickness=2]-> AP003 : serving
+AI004 -[#4CAF50,thickness=2]-> AP005 : serving
+AI005 -[#4CAF50,thickness=2]-> AP003 : serving
+
+AE001 -[#FF6B6B,thickness=2,dashed]-> AP001 : triggering
+AP001 -[#FF6B6B,thickness=2,dashed]-> AP002 : triggering
+AP002 -[#FF6B6B,thickness=2,dashed]-> AE002 : triggering
+AE002 -[#FF6B6B,thickness=2,dashed]-> AP003 : triggering
+AP003 -[#FF6B6B,thickness=2,dashed]-> AE003 : triggering
+AE003 -[#FF6B6B,thickness=2,dashed]-> AP004 : triggering
+AP004 -[#FF6B6B,thickness=2,dashed]-> AE004 : triggering
+AE004 -[#FF6B6B,thickness=2,dashed]-> AP005 : triggering
+AP005 -[#FF6B6B,thickness=2,dashed]-> AE005 : triggering
+
+AP002 -[#2196F3,thickness=2]-> DO001 : access
+AP002 -[#2196F3,thickness=2]-> DO002 : access
+AP002 -[#2196F3,thickness=2]-> DO003 : access
+AP003 -[#2196F3,thickness=2]-> DO004 : access
+AP003 -[#2196F3,thickness=2]-> DO005 : access
+AP003 -[#2196F3,thickness=2]-> DO007 : access
+AP004 -[#2196F3,thickness=2]-> DO004 : access
+AP005 -[#2196F3,thickness=2]-> DO005 : access
+AP005 -[#2196F3,thickness=2]-> DO006 : access
+
+AS001 -[#FFA500,thickness=2,dashed]-> BS001 : realization
+AS003 -[#FFA500,thickness=2,dashed]-> BS002 : realization
+AS002 -[#FFA500,thickness=2,dashed]-> BS003 : realization
+AS004 -[#FFA500,thickness=2,dashed]-> BS004 : realization
+
+legend right
+|= Тип связи |= Значение |
+| realization | Компонент/сервис реализует интерфейс или capability |
+| serving | Интерфейс/сервис обслуживает процесс |
+| triggering | Событие/процесс инициирует следующий шаг |
+| access | Чтение/запись data object |
+endlegend
+
+@enduml

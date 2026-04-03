@@ -1,0 +1,38 @@
+﻿@startuml rrdcs-data-storage-topology
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+skinparam linetype polyline
+title Топология хранения данных (Data Storage Topology) RRDCS для MVP без выделенной БД
+
+skinparam component {
+  BackgroundColor<<Source>> #FFF59D
+  BackgroundColor<<Runtime>> #B3E5FC
+  BackgroundColor<<Evidence>> #C8E6C9
+  BackgroundColor<<Cache>> #E0E0E0
+}
+
+component "ST-01\nРепозиторий Git (Git Repository)\nманифесты политик (policy-manifests)\nснимок плана проверок (check-plan-snapshot)\nжурнал управленческих решений (governance-decisions-log)" as ST01 <<Source>>
+component "ST-02\nПоток событий проверок (Checks Events Stream)\nсобытия запусков проверок (check-run-events)" as ST02 <<Runtime>>
+component "ST-03\nАртефакты GitHub (GitHub Artifacts)\nартефакты верификации (verification-artifacts)\nсводки запусков (run-summaries)" as ST03 <<Evidence>>
+component "ST-04\nКэш GitHub Actions (GitHub Actions Cache)\nкэш CI (ci-cache)" as ST04 <<Cache>>
+
+ST01 -[#1976D2,thickness=2]-> ST02 : конфигурация проверок
+ST02 .[#2196F3,dashed].> ST03 : результаты и доказательства (evidence)
+ST02 .[#9E9E9E,dashed].> ST04 : временный кэш выполнения
+ST03 -[#4CAF50]-> ST01 : ссылки на отчеты в документации
+
+note bottom of ST04
+  Не источник истины (source of truth)
+  Данные могут быть очищены
+end note
+
+legend right
+|= Контур |= Назначение |
+| ST-01 | Версионируемый источник истины (versioned source of truth) |
+| ST-02 | События и статусы выполнения (runtime events/statuses) |
+| ST-03 | Артефакты и журналы доказательств (evidence artifacts/logs) |
+| ST-04 | Эфемерный кэш (ephemeral cache) |
+endlegend
+
+@enduml

@@ -1,0 +1,37 @@
+﻿@startuml ContextMap_verification-packages
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+title Карта контекстов (Context Map): Пакеты проверок (Verification Packages)
+
+skinparam component {
+    BackgroundColor<<Core>> #FFF59D
+    BackgroundColor<<Supporting>> #B3E5FC
+    BackgroundColor<<External>> #F8BBD9
+    BackgroundColor<<ACL>> #FFCC80
+}
+
+component "BC: Пакеты проверок\n(Verification Packages)" as VP <<Core>>
+component "BC: Оркестрация проверок качества\n(Quality Gate Orchestration)" as QGO <<Supporting>>
+component "BC: Отчетность и доказательная база\n(Reporting and Evidence)" as RE <<Supporting>>
+component "BC: Управление политиками и цепочкой инструментов\n(Policy and Toolchain Governance)" as GOV <<Supporting>>
+component "Внешняя система: Инструменты линтинга и сканирования\n(Tooling)" as TOOLS <<External>>
+component "ACL: Нормализатор результатов\n(Result Normalizer)" as ACL1 <<ACL>>
+
+TOOLS -[#FF9800]-> ACL1
+ACL1 -[#FF9800]-> VP : ACL
+QGO -[#1976D2,thickness=2]-> VP : Поставщик/Потребитель (U/D)
+GOV -[#9E9E9E,dashed]-> VP : Конформист (Conformist, CF)
+VP -[#1976D2,thickness=2]-> RE : Поставщик/Потребитель (U/D)
+VP .[#2196F3,dashed].> QGO : Событие: набор проверок опубликован\n(VerificationSetPublished)
+VP .[#2196F3,dashed].> RE : Событие: детали проверок доступны\n(VerificationDetailsAvailable)
+
+legend right
+|= Тип |= Цвет |
+| Основной контекст (Core) | Желтый |
+| Поддерживающий контекст (Supporting) | Голубой |
+| Внешняя система (External) | Розовый |
+| Слой ACL (ACL) | Оранжевый |
+endlegend
+
+@enduml

@@ -1,0 +1,139 @@
+[
+  {
+    "id": "T-001",
+    "title": "Блокировка merge при падении lint check",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "required lint/static checks",
+    "type": "functional-negative",
+    "stand": "GitHub Actions pull_request run",
+    "artifacts": [
+      "github-actions-artifacts/verification/<repo>/<workflow>/<run-id>/<check-code>/lint.log",
+      "checks-status"
+    ],
+    "pass_criteria": "pass if merge is blocked when any required lint/static check fails",
+    "owner": "quality-gate-orchestration"
+  },
+  {
+    "id": "T-002",
+    "title": "Разрешение merge при полном pass required checks",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "overall required check status",
+    "type": "functional-positive",
+    "stand": "GitHub Actions pull_request run",
+    "artifacts": [
+      "github-actions-artifacts/run-summaries/<repo>/<run-id>/summary.json",
+      "checks-status"
+    ],
+    "pass_criteria": "pass if merge is available when all required checks are passed",
+    "owner": "quality-gate-orchestration"
+  },
+  {
+    "id": "T-003",
+    "title": "Паритет local pre-check и CI core checks",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "equivalence of local and CI core check results",
+    "type": "parity",
+    "stand": "Developer Workstation + GitHub Actions",
+    "artifacts": [
+      "local-check-all.log",
+      "ci-core-checks.log",
+      "compare-report.md"
+    ],
+    "pass_criteria": "pass if local and CI core check statuses are equivalent",
+    "owner": "quality-gate-orchestration"
+  },
+  {
+    "id": "T-004",
+    "title": "Срабатывание baseline security checks",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "secret scanning and SAST blocking behavior",
+    "type": "security-negative",
+    "stand": "GitHub Actions pull_request run",
+    "artifacts": [
+      "github-actions-artifacts/verification/<repo>/<workflow>/<run-id>/<check-code>/security.log",
+      "security-findings.json"
+    ],
+    "pass_criteria": "pass if blocking security finding leads to failed required check and blocked merge",
+    "owner": "verification-packages"
+  },
+  {
+    "id": "T-005",
+    "title": "Наблюдаемость fail-сценариев",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "reason and log reference completeness for failed checks",
+    "type": "observability",
+    "stand": "GitHub PR UI + Artifacts",
+    "artifacts": [
+      "github-actions-artifacts/run-summaries/<repo>/<run-id>/summary.md",
+      "artifact-links"
+    ],
+    "pass_criteria": "pass if each failed check includes failure reason and log reference",
+    "owner": "reporting-and-evidence"
+  },
+  {
+    "id": "T-006",
+    "title": "Кросс-платформенный запуск checks",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "core checks execution on windows and linux",
+    "type": "platform",
+    "stand": "GitHub Actions matrix (windows + linux)",
+    "artifacts": [
+      "matrix-job-logs"
+    ],
+    "pass_criteria": "pass if core checks complete successfully on both platforms",
+    "owner": "verification-packages"
+  },
+  {
+    "id": "T-007",
+    "title": "Подключение нового check без переписывания ядра",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "extensibility via configuration or adapter",
+    "type": "extensibility",
+    "stand": "GitHub Actions pull_request run",
+    "artifacts": [
+      "change-diff",
+      "execution-logs"
+    ],
+    "pass_criteria": "pass if new check is executed without modifying core orchestration flow",
+    "owner": "policy-and-toolchain-governance"
+  },
+  {
+    "id": "T-008",
+    "title": "Производительность core pipeline",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "median duration of core workflow",
+    "type": "performance",
+    "stand": "GitHub Actions run statistics",
+    "artifacts": [
+      "duration-report"
+    ],
+    "pass_criteria": "pass if median duration is less than or equal to 15 minutes",
+    "owner": "quality-gate-orchestration"
+  },
+  {
+    "id": "T-009",
+    "title": "Фиксация версий runtime/toolchain",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "toolchain pinning and absence of floating majors",
+    "type": "compliance",
+    "stand": "workflows and policy manifest audit",
+    "artifacts": [
+      "pin-audit-report"
+    ],
+    "pass_criteria": "pass if runtime and key toolchain versions are fixed",
+    "owner": "policy-and-toolchain-governance"
+  },
+  {
+    "id": "T-010",
+    "title": "Coverage на MVP",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "coverage job publication mode",
+    "type": "quality-metrics",
+    "stand": "GitHub Actions coverage job",
+    "artifacts": [
+      "coverage-report"
+    ],
+    "pass_criteria": "pass if coverage report is published and does not block merge on MVP",
+    "owner": "verification-packages"
+  }
+]
