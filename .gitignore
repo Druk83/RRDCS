@@ -1,0 +1,16 @@
+# Editor/OS files
+.claude/
+.env
+.tools/plantuml-render/.env
+.issues/
+.manifest/
+.diagrams/
+.approach/
+.chatlog/
+.github/
+.manifest/
+.requirements/
+.tasks/
+.tools/
+.project-structure.json
+AGENTS.md
