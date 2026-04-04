@@ -44,6 +44,7 @@ rectangle "Сервис GitHub Checks API\n(GitHub Checks API Service)\nTS-001" 
 rectangle "Сервис GitHub Artifacts\n(GitHub Artifacts Service)\nTS-002" as TS002 <<TechService>>
 rectangle "Сервис GitHub Actions Cache\n(GitHub Actions Cache Service)\nTS-003" as TS003 <<TechService>>
 rectangle "Сервис Git-репозитория\n(Git Repository Service)\nTS-004" as TS004 <<TechService>>
+rectangle "Сервис reusable workflows\n(Reusable Workflow Service)\nTS-005" as TS005 <<TechService>>
 
 rectangle "Интерфейс webhook/событий PR\n(PR Webhook/Event Interface)\nTIF-001" as TIF001 <<Interface>>
 rectangle "Интерфейс загрузки артефактов\n(Artifact Upload Interface)\nTIF-002" as TIF002 <<Interface>>
@@ -53,6 +54,7 @@ rectangle "Файлы workflow YAML\n(Workflow YAML Artifacts)\nAR-001" as AR001
 rectangle "Скрипты проверок\n(Verification Scripts)\nAR-002" as AR002 <<Artifact>>
 rectangle "Манифесты политик\n(Policy Manifests)\nAR-003" as AR003 <<Artifact>>
 rectangle "Артефакты верификации\n(Verification Artifacts)\nAR-004" as AR004 <<Artifact>>
+rectangle "Профили интеграции репозиториев\n(Repository Integration Profiles)\nAR-005" as AR005 <<Artifact>>
 
 rectangle "Оркестратор workflow\n(Workflow Orchestrator)\nAC-001" as AC001 <<ALComponent>>
 rectangle "Разрешатель политик\n(Policy Resolver)\nAC-002" as AC002 <<ALComponent>>
@@ -60,6 +62,7 @@ rectangle "Исполнитель пакетов проверок\n(Verification
 rectangle "Движок решения о слиянии\n(Merge Decision Engine)\nAC-004" as AC004 <<ALComponent>>
 rectangle "Публикатор доказательств\n(Evidence Publisher)\nAC-005" as AC005 <<ALComponent>>
 rectangle "Локальный CLI предварительной проверки\n(Local Pre-check CLI `check-all`)\nAC-006" as AC006 <<ALComponent>>
+rectangle "Менеджер профилей интеграции репозитория\n(Repository Integration Profile Manager)\nAC-007" as AC007 <<ALComponent>>
 
 SW001 -[#000000,thickness=2]-> TN001 : assignment
 SW001 -[#000000,thickness=2]-> TN002 : assignment
@@ -81,6 +84,8 @@ TS003 -[#4CAF50,thickness=2]-> AC003 : serving
 TS004 -[#4CAF50,thickness=2]-> AC001 : serving
 TS004 -[#4CAF50,thickness=2]-> AC002 : serving
 TS004 -[#4CAF50,thickness=2]-> AC006 : serving
+TS005 -[#4CAF50,thickness=2]-> AC001 : serving
+TS005 -[#4CAF50,thickness=2]-> AC007 : serving
 
 TS001 -[#FFA500,thickness=2,dashed]-> TIF001 : realization
 TS002 -[#FFA500,thickness=2,dashed]-> TIF002 : realization
@@ -96,15 +101,18 @@ AR002 -[#FFA500,thickness=2,dashed]-> AC006 : realization
 AR003 -[#FFA500,thickness=2,dashed]-> AC002 : realization
 AR003 -[#FFA500,thickness=2,dashed]-> AC006 : realization
 AR004 -[#FFA500,thickness=2,dashed]-> AC005 : realization
+AR005 -[#FFA500,thickness=2,dashed]-> AC007 : realization
 
 TN001 -[#000000,thickness=2]-> AR001 : assignment
 TN001 -[#000000,thickness=2]-> AR002 : assignment
 TN001 -[#000000,thickness=2]-> AR003 : assignment
 TN001 -[#000000,thickness=2]-> AR004 : assignment
+TN001 -[#000000,thickness=2]-> AR005 : assignment
 TN002 -[#000000,thickness=2]-> AR001 : assignment
 TN002 -[#000000,thickness=2]-> AR002 : assignment
 TN002 -[#000000,thickness=2]-> AR003 : assignment
 TN002 -[#000000,thickness=2]-> AR004 : assignment
+TN002 -[#000000,thickness=2]-> AR005 : assignment
 TN003 -[#000000,thickness=2]-> AR002 : assignment
 TN003 -[#000000,thickness=2]-> AR003 : assignment
 

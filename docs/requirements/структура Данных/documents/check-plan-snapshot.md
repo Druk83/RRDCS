@@ -15,6 +15,7 @@
 | pr_id | string | yes | no | not empty | Идентификатор PR |
 | policy_version | integer | yes | no | > 0 | Версия policy |
 | required_checks | array[string] | yes | no | min length 1 | Проверки для запуска |
+| enforcement_mode | string | yes | no | enum | `audit` или `required` |
 | trigger_type | string | yes | no | enum | open/synchronize/reopen |
 | created_at | datetime | yes | no | ISO-8601 | Время генерации |
 
@@ -26,7 +27,7 @@
 ## Использование
 * сценарии: UC-QGO-01.
 * критичные операции: сопоставление результата run с планом проверок.
-* требования: FR-001, FR-004, FR-010.
+* требования: FR-001, FR-004, FR-010, FR-013.
 
 ## Примечания
 * Объект может храниться как artifact JSON и быть связан с run summary.

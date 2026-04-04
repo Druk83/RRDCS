@@ -3,15 +3,20 @@
 skinparam backgroundColor #FFFFFF
 title Сценарий UC-01: Публикация сводки PR и доказательной базы (Publish PR Summary and Evidence)
 
-actor "Система непрерывной интеграции (Continuous Integration System)" as CI
 participant "BC Оркестрация проверок качества (Quality Gate Orchestration BC)" as QGO
 participant "BC Пакеты проверок (Verification Packages BC)" as VP
 participant "BC Отчетность и доказательная база (Reporting and Evidence BC)" as RE
 participant "Интерфейс PR / Хранилище артефактов (PR UI / Artifact Storage)" as UI
 actor "Разработчик (Developer)" as Dev
 
-QGO -> RE : EVT Завершение gate-запуска (GateRunCompleted)
-VP -> RE : EVT Детали верификации доступны (VerificationDetailsAvailable)
+par Поступил статус gate-запуска (Gate run status arrived)
+  QGO -> RE : EVT Завершение gate-запуска (GateRunCompleted)
+else Поступили детали верификации (Verification details arrived)
+  VP -> RE : EVT Детали верификации доступны (VerificationDetailsAvailable)
+end
+note right of RE
+  Обработка запускается после получения\nобоих входящих событий
+end note
 RE -> RE : CMD Сформировать сводку запуска (BuildRunSummary)
 RE -> UI : CMD Связать доказательные артефакты (LinkEvidenceArtifacts)
 UI --> RE : EVT Ссылки на evidence опубликованы (EvidenceLinksPublished)

@@ -10,7 +10,7 @@
 ## Схема
 * bucket: `github-actions-artifacts/verification`
 * объект/ключ: `<repo>/<workflow>/<run-id>/<check-code>/<file>`
-* метаданные: `run_id`, `pr_id`, `check_code`, `platform`, `created_at`, `retention_days`
+* метаданные: `run_id`, `pr_id`, `repository_slug`, `profile_version`, `check_code`, `platform`, `created_at`, `retention_days`
 * lifecycle/retention: по настроенной artifact retention policy
 * доступ: GitHub permissions / repository access
 

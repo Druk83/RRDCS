@@ -19,6 +19,7 @@
 | T-008 | Performance of Core Pipeline | suite-pipeline-performance | auto | `испытание системы.md#7` | duration report |
 | T-009 | Governance and Pin Audit | suite-toolchain-pin-audit | auto | `испытание системы.md#7` | pin-audit report |
 | T-010 | Coverage Metrics | suite-coverage-mvp | auto | `испытание системы.md#7` | coverage report |
+| T-011 | Multi-Repository Onboarding and Rollout | suite-repository-onboarding-rollout | mixed | `испытание системы.md#7` | onboarding checklist + audit/required logs |
 
 ## Правила синхронизации
 - Любая новая проверка в ПМИ обязана получить `T-###` и строку маппинга.

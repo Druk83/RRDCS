@@ -3,7 +3,6 @@
 skinparam backgroundColor #FFFFFF
 title Сценарий UC-01: Выполнение базового набора проверок (Execute Baseline Verification Set)
 
-actor "Система непрерывной интеграции (Continuous Integration System)" as CI
 participant "BC Оркестрация проверок качества (Quality Gate Orchestration BC)" as QGO
 participant "BC Пакеты проверок (Verification Packages BC)" as VP
 participant "Инструменты стилевых проверок (Style Checker Tooling)" as STYLE

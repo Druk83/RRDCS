@@ -104,5 +104,17 @@
     "artifacts": [
       "coverage-report"
     ]
+  },
+  {
+    "test_id": "T-011",
+    "level": "multi-repo-onboarding-rollout",
+    "suite": "suite-repository-onboarding-rollout",
+    "execution_type": "mixed",
+    "method_ref": "docs/requirements/тестирование/испытание системы.md#7",
+    "artifacts": [
+      "onboarding-checklist",
+      "audit-run-log",
+      "required-run-log"
+    ]
   }
 ]

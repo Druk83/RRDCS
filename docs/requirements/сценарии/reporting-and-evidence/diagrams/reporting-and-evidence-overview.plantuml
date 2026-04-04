@@ -1,28 +1,28 @@
 ﻿@startuml reporting-and-evidence-overview
 !theme plain
 skinparam backgroundColor #FFFFFF
+left to right direction
 title Диаграмма вариантов использования: Отчетность и доказательная база (Reporting and Evidence)
 
-actor "Система непрерывной интеграции (Continuous Integration System)" as CI
+actor "BC Оркестрация проверок качества (Quality Gate Orchestration BC)" as QGO
+actor "BC Пакеты проверок (Verification Packages BC)" as VP
 actor "Разработчик (Developer)" as Dev
-actor "Технический лидер и архитектор (Tech Lead and Architect)" as Lead
 
 rectangle "Отчетность и доказательная база (Reporting and Evidence)" {
-  usecase "Сформировать сводку запуска (Build Run Summary)" as UC1
-  usecase "Связать доказательные артефакты (Link Evidence Artifacts)" as UC2
-  usecase "Опубликовать сводку PR (Publish PR Summary)" as UC3
-  usecase "Обновить верификационный отчет (Update Verification Report)" as UC4
-  usecase "Запросить повторную выгрузку логов (Request Log Reupload)" as UC5
+  usecase "Публиковать PR summary и доказательную базу\n(Publish PR Summary and Evidence)" as UC1
+  usecase "Принять итог gate-запуска\n(Receive Gate Run Result)" as UC2
+  usecase "Принять детали верификации\n(Receive Verification Details)" as UC3
+  usecase "Сформировать и опубликовать сводку PR\n(Build and Publish PR Summary)" as UC4
+  usecase "Запросить повторную выгрузку логов\n(Request Log Reupload)" as UC5
 }
 
-CI --> UC1
-CI --> UC2
-CI --> UC3
-Lead --> UC4
-Dev --> UC3
-Dev --> UC5
+Dev --> UC1
+QGO --> UC2
+VP --> UC3
 
-UC3 ..> UC2 : <<include>>
+UC1 ..> UC2 : <<include>>
+UC1 ..> UC3 : <<include>>
+UC1 ..> UC4 : <<include>>
+UC5 ..> UC1 : <<extend>>
 
 @enduml
-

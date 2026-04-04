@@ -42,6 +42,7 @@ Technology Layer фиксирует, **на чем** выполняются пр
 | TS-002 | Сервис GitHub Artifacts (GitHub Artifacts Service) | AC-005 |
 | TS-003 | Сервис GitHub Actions Cache (GitHub Actions Cache Service) | AC-003 |
 | TS-004 | Сервис Git-репозитория (Git Repository Service) | AC-001, AC-002, AC-006 |
+| TS-005 | Сервис reusable workflows (Reusable Workflow Service) | AC-001, AC-007 |
 
 ## 3. Интерфейсы, артефакты, сеть
 
@@ -59,6 +60,7 @@ Technology Layer фиксирует, **на чем** выполняются пр
 | AR-002 | Скрипты проверок (Verification Scripts) | `.tools/*` |
 | AR-003 | Манифесты политик (Policy Manifests) | `.manifest/*`, policy/config files |
 | AR-004 | Артефакты верификации (Verification Artifacts) | generated CI artifacts |
+| AR-005 | Профили интеграции репозиториев (Repository Integration Profiles) | `.manifest/profiles/*` |
 
 ### 3.3 Сеть и пути (Communication Network and Paths)
 | ID | Тип | Название | Назначение |
@@ -78,6 +80,7 @@ Technology Layer фиксирует, **на чем** выполняются пр
 | AC-004 Движок решения о слиянии (Merge Decision Engine) | TN-001/TN-002 | SW-001, SW-002 |
 | AC-005 Публикатор доказательств (Evidence Publisher) | TN-001/TN-002 | SW-001, SW-002 |
 | AC-006 Локальный CLI предварительной проверки (Local Pre-check CLI `check-all`) | TN-003 | SW-002, SW-003, SW-004, SW-005 |
+| AC-007 Менеджер профилей интеграции репозитория (Repository Integration Profile Manager) | TN-001/TN-002 | SW-001, SW-002, SW-005 |
 
 ## 5. Надежность, безопасность, наблюдаемость
 - **Надежность:** merge-gate опирается на обязательные status checks и branch protection.
@@ -98,12 +101,25 @@ Technology Layer фиксирует, **на чем** выполняются пр
 | TS-002 + AR-004 | FR-008 | NFR-006 |
 | TS-003 | FR-010 | NFR-002 |
 | SW-002/SW-003/SW-004/SW-005 | FR-004, FR-005 | NFR-004, NFR-005 |
+| TS-005 + AR-005 | FR-011, FR-012, FR-013 | NFR-009 |
 
-## 8. Диаграмма TL
+## 8. Межслойные связи (зеркальная фиксация TL -> AL)
+- `TS-001 -> AC-001`, `TS-001 -> AC-004`
+- `TS-002 -> AC-005`
+- `TS-003 -> AC-003`
+- `TS-004 -> AC-001`, `TS-004 -> AC-002`, `TS-004 -> AC-006`
+- `TS-005 -> AC-001`, `TS-005 -> AC-007`
+- `AR-001 -> AC-001`
+- `AR-002 -> AC-003`, `AR-002 -> AC-006`
+- `AR-003 -> AC-002`, `AR-003 -> AC-006`
+- `AR-004 -> AC-005`
+- `AR-005 -> AC-007`
+
+## 9. Диаграмма TL
 - исходник: `docs/requirements/архитектура/diagrams/TL.plantuml`
 - рендер: `docs/requirements/архитектура/diagrams/TL.png`
 
-## 9. Готовность
+## 10. Готовность
 - [x] Определены nodes, system software, technology services и artifacts.
 - [x] Выполнено отображение AL-компонентов на инфраструктурные узлы.
 - [x] Зафиксированы ограничения MVP без выделенной прикладной БД.

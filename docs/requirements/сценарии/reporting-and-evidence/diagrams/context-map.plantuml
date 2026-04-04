@@ -14,7 +14,7 @@ skinparam component {
 component "BC: Отчетность и доказательная база\n(Reporting and Evidence)" as RE <<Core>>
 component "BC: Оркестрация проверок качества\n(Quality Gate Orchestration)" as QGO <<Supporting>>
 component "BC: Пакеты проверок\n(Verification Packages)" as VP <<Supporting>>
-component "Внешняя система: Интерфейс PR / Хранилище артефактов\n(PR UI / Artifact Storage)" as UI <<External>>
+component "Внешняя система: GitHub интерфейс PR / хранилище артефактов\n(PR UI / Artifact Storage)" as UI <<External>>
 component "ACL: Нормализатор сводки\n(Summary Normalizer)" as ACL1 <<ACL>>
 
 QGO -[#1976D2,thickness=2]-> RE : Поставщик/Потребитель (U/D)

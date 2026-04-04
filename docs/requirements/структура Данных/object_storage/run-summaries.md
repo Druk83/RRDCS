@@ -10,7 +10,7 @@
 ## Схема
 * bucket: `github-actions-artifacts/run-summaries`
 * объект/ключ: `<repo>/<run-id>/summary.<json|md>`
-* метаданные: `run_id`, `pr_id`, `overall_status`, `failed_checks_count`, `generated_at`
+* метаданные: `run_id`, `pr_id`, `repository_slug`, `profile_version`, `overall_status`, `failed_checks_count`, `generated_at`
 * lifecycle/retention: по artifact retention policy
 * доступ: участники PR и роли с правами чтения артефактов
 

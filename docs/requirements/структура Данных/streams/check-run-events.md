@@ -9,7 +9,7 @@
 
 ## Схема
 * topic: `check-run-events`
-* схема сообщения: envelope + payload события (`eventId`, `eventType`, `eventVersion`, `correlationId`, `causationId`, `payload`)
+* схема сообщения: envelope + payload события (`eventId`, `eventType`, `eventVersion`, `correlationId`, `causationId`, `repositorySlug`, `payload`)
 * совместимость: backward-compatible additions
 * партиции/ключ: `pr_id` / `run_id` (логический ключ)
 * retention: определяется политикой GitHub и artifact retention

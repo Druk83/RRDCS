@@ -29,8 +29,20 @@ skinparam rectangle<<Event>> {
 skinparam rectangle<<DataObject>> {
   BackgroundColor #B5E7F0
 }
-skinparam rectangle<<BLService>> {
+skinparam rectangle<<BLProcess>> {
   BackgroundColor #FFFACD
+}
+skinparam rectangle<<BLEvent>> {
+  BackgroundColor #FFFACD
+}
+skinparam rectangle<<BLObject>> {
+  BackgroundColor #FFFACD
+}
+skinparam rectangle<<TLService>> {
+  BackgroundColor #C9E7B7
+}
+skinparam rectangle<<TLArtifact>> {
+  BackgroundColor #C9E7B7
 }
 
 rectangle "Оркестратор workflow\n(Workflow Orchestrator)\nAC-001" as AC001 <<Component>>
@@ -39,29 +51,34 @@ rectangle "Исполнитель пакетов проверок\n(Verification
 rectangle "Движок решения о слиянии\n(Merge Decision Engine)\nAC-004" as AC004 <<Component>>
 rectangle "Публикатор доказательств\n(Evidence Publisher)\nAC-005" as AC005 <<Component>>
 rectangle "Локальный CLI предварительной проверки\n(Local Pre-check CLI `check-all`)\nAC-006" as AC006 <<Component>>
+rectangle "Менеджер профилей интеграции репозитория\n(Repository Integration Profile Manager)\nAC-007" as AC007 <<Component>>
 
 rectangle "Сервис разрешения плана проверок\n(Check Plan Resolution Service)\nAS-001" as AS001 <<Service>>
 rectangle "Сервис выполнения проверок\n(Verification Execution Service)\nAS-002" as AS002 <<Service>>
 rectangle "Сервис решения о слиянии\n(Merge Decision Service)\nAS-003" as AS003 <<Service>>
 rectangle "Сервис публикации доказательств\n(Evidence Publication Service)\nAS-004" as AS004 <<Service>>
+rectangle "Сервис управления onboarding/rollout\n(Repository Onboarding and Rollout Service)\nAS-005" as AS005 <<Service>>
 
 rectangle "Интерфейс событий PR\n(PR Event Interface)\nAI-001" as AI001 <<Interface>>
 rectangle "Интерфейс манифестов политик\n(Policy Manifest Interface)\nAI-002" as AI002 <<Interface>>
 rectangle "Интерфейс пакетов проверок\n(Verification Package Interface)\nAI-003" as AI003 <<Interface>>
 rectangle "Интерфейс отчетности\n(Reporting Interface)\nAI-004" as AI004 <<Interface>>
 rectangle "Интерфейс локального CLI\n(Local CLI Interface)\nAI-005" as AI005 <<Interface>>
+rectangle "Интерфейс профиля интеграции репозитория\n(Repository Integration Profile Interface)\nAI-006" as AI006 <<Interface>>
 
 rectangle "Обработка события PR\n(Process PR Event)\nAP-001" as AP001 <<Process>>
 rectangle "Разрешение обязательных проверок\n(Resolve Required Checks)\nAP-002" as AP002 <<Process>>
 rectangle "Запуск набора проверок\n(Run Verification Set)\nAP-003" as AP003 <<Process>>
 rectangle "Расчет решения о слиянии\n(Calculate Merge Decision)\nAP-004" as AP004 <<Process>>
 rectangle "Публикация доказательств\n(Publish Evidence)\nAP-005" as AP005 <<Process>>
+rectangle "Применение профиля интеграции репозитория\n(Apply Repository Integration Profile)\nAP-006" as AP006 <<Process>>
 
 rectangle "Событие PR получено\n(PR Event Received)\nAE-001" as AE001 <<Event>>
 rectangle "План обязательных проверок разрешен\n(Required Plan Resolved)\nAE-002" as AE002 <<Event>>
 rectangle "Набор проверок завершен\n(Verification Set Completed)\nAE-003" as AE003 <<Event>>
 rectangle "Решение о слиянии рассчитано\n(Merge Decision Calculated)\nAE-004" as AE004 <<Event>>
 rectangle "Доказательства опубликованы\n(Evidence Published)\nAE-005" as AE005 <<Event>>
+rectangle "Профиль интеграции применен\n(Repository Profile Applied)\nAE-006" as AE006 <<Event>>
 
 rectangle "Манифесты политик\n(Policy Manifests)\nDO-001" as DO001 <<DataObject>>
 rectangle "Снимок плана проверок\n(Check Plan Snapshot)\nDO-002" as DO002 <<DataObject>>
@@ -70,11 +87,29 @@ rectangle "События запусков проверок\n(Check Run Events)\
 rectangle "Артефакты верификации\n(Verification Artifacts)\nDO-005" as DO005 <<DataObject>>
 rectangle "Сводки запусков\n(Run Summaries)\nDO-006" as DO006 <<DataObject>>
 rectangle "CI-кэш\n(CI Cache)\nDO-007" as DO007 <<DataObject>>
+rectangle "Профили интеграции репозиториев\n(Repository Integration Profiles)\nDO-008" as DO008 <<DataObject>>
 
-rectangle "Сервис управления политиками\n(Policy Governance Service)\nBS-001" as BS001 <<BLService>>
-rectangle "Сервис качественных ворот\n(Quality Gate Service)\nBS-002" as BS002 <<BLService>>
-rectangle "Сервис верификации\n(Verification Service)\nBS-003" as BS003 <<BLService>>
-rectangle "Сервис отчетности и доказательств\n(Reporting and Evidence Service)\nBS-004" as BS004 <<BLService>>
+rectangle "Управление политиками и фиксацией toolchain\n(Policy and Toolchain Pin Governance)\nBP-001" as BP001 <<BLProcess>>
+rectangle "Оркестрация обязательных проверок PR\n(Pull Request Required Checks Orchestration)\nBP-002" as BP002 <<BLProcess>>
+rectangle "Выполнение базового набора проверок\n(Baseline Verification Set Execution)\nBP-003" as BP003 <<BLProcess>>
+rectangle "Публикация сводки и доказательств\n(Summary and Evidence Publication)\nBP-004" as BP004 <<BLProcess>>
+rectangle "Подключение репозитория и rollout режима\n(Repository Onboarding and Rollout)\nBP-005" as BP005 <<BLProcess>>
+rectangle "Решение по слиянию зафиксировано\n(Merge Decision Recorded)\nBE-004" as BE004 <<BLEvent>>
+rectangle "Манифесты политик\n(Policy Manifests)\nBO-001" as BO001 <<BLObject>>
+rectangle "Артефакты верификации\n(Verification Artifacts)\nBO-005" as BO005 <<BLObject>>
+rectangle "Сводки запусков\n(Run Summaries)\nBO-006" as BO006 <<BLObject>>
+rectangle "Профили интеграции репозиториев\n(Repository Integration Profiles)\nBO-007" as BO007 <<BLObject>>
+
+rectangle "Сервис GitHub Checks API\n(GitHub Checks API Service)\nTS-001" as TS001 <<TLService>>
+rectangle "Сервис GitHub Artifacts\n(GitHub Artifacts Service)\nTS-002" as TS002 <<TLService>>
+rectangle "Сервис GitHub Actions Cache\n(GitHub Actions Cache Service)\nTS-003" as TS003 <<TLService>>
+rectangle "Сервис Git-репозитория\n(Git Repository Service)\nTS-004" as TS004 <<TLService>>
+rectangle "Сервис reusable workflows\n(Reusable Workflow Service)\nTS-005" as TS005 <<TLService>>
+rectangle "Файлы workflow YAML\n(Workflow YAML Artifacts)\nAR-001" as AR001 <<TLArtifact>>
+rectangle "Скрипты проверок\n(Verification Scripts)\nAR-002" as AR002 <<TLArtifact>>
+rectangle "Манифесты политик\n(Policy Manifests)\nAR-003" as AR003 <<TLArtifact>>
+rectangle "Артефакты верификации\n(Verification Artifacts)\nAR-004" as AR004 <<TLArtifact>>
+rectangle "Профили интеграции репозиториев\n(Repository Integration Profiles)\nAR-005" as AR005 <<TLArtifact>>
 
 AC001 -[#FFA500,thickness=2,dashed]-> AS001 : realization
 AC002 -[#FFA500,thickness=2,dashed]-> AS001 : realization
@@ -82,18 +117,21 @@ AC003 -[#FFA500,thickness=2,dashed]-> AS002 : realization
 AC006 -[#FFA500,thickness=2,dashed]-> AS002 : realization
 AC004 -[#FFA500,thickness=2,dashed]-> AS003 : realization
 AC005 -[#FFA500,thickness=2,dashed]-> AS004 : realization
+AC007 -[#FFA500,thickness=2,dashed]-> AS005 : realization
 
 AC001 -[#FFA500,thickness=2,dashed]-> AI001 : realization
 AC002 -[#FFA500,thickness=2,dashed]-> AI002 : realization
 AC003 -[#FFA500,thickness=2,dashed]-> AI003 : realization
 AC005 -[#FFA500,thickness=2,dashed]-> AI004 : realization
 AC006 -[#FFA500,thickness=2,dashed]-> AI005 : realization
+AC007 -[#FFA500,thickness=2,dashed]-> AI006 : realization
 
 AI001 -[#4CAF50,thickness=2]-> AP001 : serving
 AI002 -[#4CAF50,thickness=2]-> AP002 : serving
 AI003 -[#4CAF50,thickness=2]-> AP003 : serving
 AI004 -[#4CAF50,thickness=2]-> AP005 : serving
 AI005 -[#4CAF50,thickness=2]-> AP003 : serving
+AI006 -[#4CAF50,thickness=2]-> AP006 : serving
 
 AE001 -[#FF6B6B,thickness=2,dashed]-> AP001 : triggering
 AP001 -[#FF6B6B,thickness=2,dashed]-> AP002 : triggering
@@ -104,6 +142,8 @@ AE003 -[#FF6B6B,thickness=2,dashed]-> AP004 : triggering
 AP004 -[#FF6B6B,thickness=2,dashed]-> AE004 : triggering
 AE004 -[#FF6B6B,thickness=2,dashed]-> AP005 : triggering
 AP005 -[#FF6B6B,thickness=2,dashed]-> AE005 : triggering
+AE002 -[#FF6B6B,thickness=2,dashed]-> AP006 : triggering
+AP006 -[#FF6B6B,thickness=2,dashed]-> AE006 : triggering
 
 AP002 -[#2196F3,thickness=2]-> DO001 : access
 AP002 -[#2196F3,thickness=2]-> DO002 : access
@@ -114,15 +154,40 @@ AP003 -[#2196F3,thickness=2]-> DO007 : access
 AP004 -[#2196F3,thickness=2]-> DO004 : access
 AP005 -[#2196F3,thickness=2]-> DO005 : access
 AP005 -[#2196F3,thickness=2]-> DO006 : access
+AP006 -[#2196F3,thickness=2]-> DO008 : access
 
-AS001 -[#FFA500,thickness=2,dashed]-> BS001 : realization
-AS003 -[#FFA500,thickness=2,dashed]-> BS002 : realization
-AS002 -[#FFA500,thickness=2,dashed]-> BS003 : realization
-AS004 -[#FFA500,thickness=2,dashed]-> BS004 : realization
+AS001 -[#4CAF50,thickness=2]-> BP001 : serving
+AS001 -[#4CAF50,thickness=2]-> BP002 : serving
+AS002 -[#4CAF50,thickness=2]-> BP003 : serving
+AS003 -[#4CAF50,thickness=2]-> BP002 : serving
+AS004 -[#4CAF50,thickness=2]-> BP004 : serving
+AS005 -[#4CAF50,thickness=2]-> BP005 : serving
+AE004 -[#FF6B6B,thickness=2,dashed]-> BE004 : triggering
+DO001 -[#FFA500,thickness=2,dashed]-> BO001 : realization
+DO005 -[#FFA500,thickness=2,dashed]-> BO005 : realization
+DO006 -[#FFA500,thickness=2,dashed]-> BO006 : realization
+DO008 -[#FFA500,thickness=2,dashed]-> BO007 : realization
+
+TS001 -[#4CAF50,thickness=2]-> AC001 : serving
+TS001 -[#4CAF50,thickness=2]-> AC004 : serving
+TS002 -[#4CAF50,thickness=2]-> AC005 : serving
+TS003 -[#4CAF50,thickness=2]-> AC003 : serving
+TS004 -[#4CAF50,thickness=2]-> AC001 : serving
+TS004 -[#4CAF50,thickness=2]-> AC002 : serving
+TS004 -[#4CAF50,thickness=2]-> AC006 : serving
+TS005 -[#4CAF50,thickness=2]-> AC001 : serving
+TS005 -[#4CAF50,thickness=2]-> AC007 : serving
+AR001 -[#FFA500,thickness=2,dashed]-> AC001 : realization
+AR002 -[#FFA500,thickness=2,dashed]-> AC003 : realization
+AR002 -[#FFA500,thickness=2,dashed]-> AC006 : realization
+AR003 -[#FFA500,thickness=2,dashed]-> AC002 : realization
+AR003 -[#FFA500,thickness=2,dashed]-> AC006 : realization
+AR004 -[#FFA500,thickness=2,dashed]-> AC005 : realization
+AR005 -[#FFA500,thickness=2,dashed]-> AC007 : realization
 
 legend right
 |= Тип связи |= Значение |
-| realization | Компонент/сервис реализует интерфейс или capability |
+| realization | Реализация между элементами (component/service/data/tl-artifact) |
 | serving | Интерфейс/сервис обслуживает процесс |
 | triggering | Событие/процесс инициирует следующий шаг |
 | access | Чтение/запись data object |

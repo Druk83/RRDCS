@@ -135,5 +135,20 @@
     ],
     "pass_criteria": "pass if coverage report is published and does not block merge on MVP",
     "owner": "verification-packages"
+  },
+  {
+    "id": "T-011",
+    "title": "Onboarding нового репозитория и rollout режима",
+    "source": "docs/requirements/требования/требования_внутренний_стандарт.md#83",
+    "parameter": "repository integration profile onboarding and enforcement transition audit->required",
+    "type": "onboarding-rollout",
+    "stand": "Governance flow + GitHub Actions pull_request run",
+    "artifacts": [
+      "onboarding-checklist",
+      "governance-decisions-log",
+      "github-actions-artifacts/run-summaries/<repo>/<run-id>/summary.json"
+    ],
+    "pass_criteria": "pass if repository is onboarded via profile in audit mode and then promoted to required mode without changing core scripts",
+    "owner": "policy-and-toolchain-governance"
   }
 ]

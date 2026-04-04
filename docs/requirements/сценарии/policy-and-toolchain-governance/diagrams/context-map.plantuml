@@ -14,7 +14,7 @@ skinparam component {
 component "BC: Управление политиками и цепочкой инструментов\n(Policy and Toolchain Governance)" as GOV <<Core>>
 component "BC: Оркестрация проверок качества\n(Quality Gate Orchestration)" as QGO <<Supporting>>
 component "BC: Пакеты проверок\n(Verification Packages)" as VP <<Supporting>>
-component "Внешняя система: Git-репозиторий / Поток PR\n(Git Repository / PR Flow)" as PR <<External>>
+component "Внешняя система: Git-репозиторий и поток PR\n(Git Repository and Pull Request Flow)" as PR <<External>>
 component "ACL: Адаптер governance-событий PR\n(PR Governance Adapter)" as ACL1 <<ACL>>
 
 PR -[#FF9800]-> ACL1

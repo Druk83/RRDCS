@@ -18,6 +18,7 @@
   - Принятие решения о допуске/блокировке merge по результатам обязательных проверок (`required checks`).
   - Локальный запуск `check-all` как эквивалент core-проверок.
   - Подключение новых проверок через конфигурацию без изменения базового потока.
+  - Применение режима внедрения репозитория (`audit`/`required`) из профиля интеграции.
 - **scope_out:**
   - Детальная реализация конкретных линтеров и security-сканеров (домен `verification-packages`).
   - Хранение и утверждение политик качества (quality policy) и версий цепочки инструментов (toolchain) (домен `policy-and-toolchain-governance`).
@@ -31,7 +32,7 @@
   - `MergeDecision`: `pr_id`, `required_checks_passed`, `decision`, `reason`.
   - `CheckPlan`: `plan_id`, `required_checks`, `optional_checks`, `matrix_profile`.
 - **requirements_refs:**
-  - FR-001, FR-002, FR-003, FR-004, FR-010
+  - FR-001, FR-002, FR-003, FR-004, FR-010, FR-013
   - NFR-001, NFR-005
 - **interfaces:**
   - `-> verification-packages` (sync): вызов пакетов проверок по плану.
@@ -45,6 +46,7 @@
 3. Формирует итоговое решение: merge разрешен или заблокирован.
 4. Поддерживает единый orchestration-поток для локального `check-all` и CI.
 5. Позволяет подключать новые проверки через конфигурацию и адаптеры.
+6. Поддерживает переход репозитория из `audit` в `required` без изменения core scripts.
 
 ## Что домен не делает
 

@@ -15,6 +15,7 @@
 | version | integer | yes | no | > 0 | Версия policy |
 | required_checks | array[string] | yes | no | min length 1 | Обязательные проверки |
 | thresholds | object | yes | no | schema | Пороги quality/security |
+| repository_profiles | array[object] | yes | no | min length 1 | Профили интеграции репозиториев |
 | effective_from | datetime | yes | no | ISO-8601 | Дата вступления |
 
 ## Правила
@@ -23,9 +24,9 @@
 * примеры документов: policy YAML/JSON в репозитории.
 
 ## Использование
-* сценарии: UC-PG-01, UC-QGO-01.
+* сценарии: UC-PG-01, UC-PG-02, UC-QGO-01.
 * критичные операции: чтение актуальной policy версий для orchestration.
-* требования: FR-005, NFR-004, NFR-007.
+* требования: FR-005, FR-011, FR-012, NFR-004, NFR-007, NFR-009.
 
 ## Примечания
 * Source of truth — Git.

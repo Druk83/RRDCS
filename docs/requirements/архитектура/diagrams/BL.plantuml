@@ -29,6 +29,15 @@ skinparam rectangle<<Object>> {
 skinparam rectangle<<Event>> {
   BackgroundColor #FFFACD
 }
+skinparam rectangle<<ALService>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<ALEvent>> {
+  BackgroundColor #B5E7F0
+}
+skinparam rectangle<<ALDataObject>> {
+  BackgroundColor #B5E7F0
+}
 
 rectangle "Разработчик\n(Developer)\nBA-001" as BA001 <<Actor>>
 rectangle "Технический лидер и архитектор\n(Tech Lead and Architect)\nBA-002" as BA002 <<Actor>>
@@ -43,6 +52,7 @@ rectangle "Управление политиками и фиксацией toolc
 rectangle "Оркестрация обязательных проверок PR\n(Pull Request Required Checks Orchestration)\nBP-002" as BP002 <<Process>>
 rectangle "Выполнение базового набора проверок\n(Baseline Verification Set Execution)\nBP-003" as BP003 <<Process>>
 rectangle "Публикация сводки и доказательств\n(Summary and Evidence Publication)\nBP-004" as BP004 <<Process>>
+rectangle "Подключение репозитория и rollout режима\n(Repository Onboarding and Rollout)\nBP-005" as BP005 <<Process>>
 
 rectangle "Сервис управления политиками\n(Policy Governance Service)\nBS-001" as BS001 <<Service>>
 rectangle "Сервис качественных ворот\n(Quality Gate Service)\nBS-002" as BS002 <<Service>>
@@ -61,6 +71,17 @@ rectangle "Журнал решений по governance\n(Governance Decisions Lo
 rectangle "События запусков проверок\n(Check Run Events)\nBO-004" as BO004 <<Object>>
 rectangle "Артефакты верификации\n(Verification Artifacts)\nBO-005" as BO005 <<Object>>
 rectangle "Сводки запусков\n(Run Summaries)\nBO-006" as BO006 <<Object>>
+rectangle "Профили интеграции репозиториев\n(Repository Integration Profiles)\nBO-007" as BO007 <<Object>>
+rectangle "Сервис разрешения плана проверок\n(Check Plan Resolution Service)\nAS-001" as AS001 <<ALService>>
+rectangle "Сервис выполнения проверок\n(Verification Execution Service)\nAS-002" as AS002 <<ALService>>
+rectangle "Сервис решения о слиянии\n(Merge Decision Service)\nAS-003" as AS003 <<ALService>>
+rectangle "Сервис публикации доказательств\n(Evidence Publication Service)\nAS-004" as AS004 <<ALService>>
+rectangle "Сервис управления onboarding/rollout\n(Repository Onboarding and Rollout Service)\nAS-005" as AS005 <<ALService>>
+rectangle "Решение о слиянии рассчитано\n(Merge Decision Calculated)\nAE-004" as AE004 <<ALEvent>>
+rectangle "Манифесты политик\n(Policy Manifests)\nDO-001" as DO001 <<ALDataObject>>
+rectangle "Артефакты верификации\n(Verification Artifacts)\nDO-005" as DO005 <<ALDataObject>>
+rectangle "Сводки запусков\n(Run Summaries)\nDO-006" as DO006 <<ALDataObject>>
+rectangle "Профили интеграции репозиториев\n(Repository Integration Profiles)\nDO-008" as DO008 <<ALDataObject>>
 
 BA001 -[#000000,thickness=2]-> BR001 : assignment
 BA002 -[#000000,thickness=2]-> BR002 : assignment
@@ -70,6 +91,7 @@ BA002 -[#000000,thickness=2]-> BR004 : assignment
 
 BR001 -[#000000,thickness=2]-> BP002 : assignment
 BR002 -[#000000,thickness=2]-> BP001 : assignment
+BR002 -[#000000,thickness=2]-> BP005 : assignment
 BR003 -[#000000,thickness=2]-> BP003 : assignment
 BR004 -[#000000,thickness=2]-> BP004 : assignment
 
@@ -81,11 +103,13 @@ BP003 -[#FF6B6B,thickness=2,dashed]-> BE005 : triggering
 BE003 -[#FF6B6B,thickness=2,dashed]-> BP004 : triggering
 BE005 -[#FF6B6B,thickness=2,dashed]-> BP004 : triggering
 BP004 -[#FF6B6B,thickness=2,dashed]-> BE004 : triggering
+BE004 -[#FF6B6B,thickness=2,dashed]-> BP005 : triggering
 
 BP001 -[#FFA500,thickness=2,dashed]-> BS001 : realization
 BP002 -[#FFA500,thickness=2,dashed]-> BS002 : realization
 BP003 -[#FFA500,thickness=2,dashed]-> BS003 : realization
 BP004 -[#FFA500,thickness=2,dashed]-> BS004 : realization
+BP005 -[#FFA500,thickness=2,dashed]-> BS001 : realization
 
 BP001 -[#2196F3,thickness=2]-> BO001 : access
 BP001 -[#2196F3,thickness=2]-> BO003 : access
@@ -93,11 +117,25 @@ BP002 -[#2196F3,thickness=2]-> BO002 : access
 BP003 -[#2196F3,thickness=2]-> BO004 : access
 BP003 -[#2196F3,thickness=2]-> BO005 : access
 BP004 -[#2196F3,thickness=2]-> BO006 : access
+BP005 -[#2196F3,thickness=2]-> BO003 : access
+BP005 -[#2196F3,thickness=2]-> BO007 : access
+
+AS001 -[#4CAF50,thickness=2]-> BP001 : serving
+AS001 -[#4CAF50,thickness=2]-> BP002 : serving
+AS002 -[#4CAF50,thickness=2]-> BP003 : serving
+AS003 -[#4CAF50,thickness=2]-> BP002 : serving
+AS004 -[#4CAF50,thickness=2]-> BP004 : serving
+AS005 -[#4CAF50,thickness=2]-> BP005 : serving
+AE004 -[#FF6B6B,thickness=2,dashed]-> BE004 : triggering
+DO001 -[#FFA500,thickness=2,dashed]-> BO001 : realization
+DO005 -[#FFA500,thickness=2,dashed]-> BO005 : realization
+DO006 -[#FFA500,thickness=2,dashed]-> BO006 : realization
+DO008 -[#FFA500,thickness=2,dashed]-> BO007 : realization
 
 legend right
 |= Тип связи |= Значение |
 | assignment | Назначение роли/исполнителя |
-| realization | Реализация сервиса процессом |
+| realization | Реализация между элементами (процесс->сервис, data->object) |
 | triggering | Инициирование процесса событием |
 | access | Доступ процесса к объекту |
 endlegend
