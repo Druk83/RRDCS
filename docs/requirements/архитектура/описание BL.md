@@ -8,7 +8,7 @@
 - **Реестр сущностей:** `docs/requirements/архитектура/сущности.md`
 
 ## 1. Назначение бизнес-слоя
-Business Layer фиксирует, **что** делает система RRDCS для контроля качества изменений в PR:
+Бизнес-слой (Business Layer) фиксирует, **что** делает система RRDCS для контроля качества изменений в PR:
 - управление политиками и фиксацией toolchain;
 - оркестрация обязательных проверок;
 - исполнение базового набора проверок;
@@ -16,14 +16,14 @@ Business Layer фиксирует, **что** делает система RRDCS 
 
 ## 2. Акторы и роли
 
-### 2.1 Акторы
+### 2.1 Акторы (Actors)
 | ID | Actor | Роль в процессе |
 |---|---|---|
 | BA-001 | Разработчик (Developer) | Создает/обновляет PR, запускает локальный pre-check |
 | BA-002 | Технический лидер и архитектор (Tech Lead and Architect) | Утверждает политики качества и фиксацию toolchain |
 | BA-003 | Система непрерывной интеграции (Continuous Integration System) | Исполняет orchestration flow и check-пакеты |
 
-### 2.2 Роли
+### 2.2 Роли (Roles)
 | ID | Role | Исполняется актором | Назначение |
 |---|---|---|---|
 | BR-001 | Инициатор изменения (Change Initiator) | BA-001 | Инициирует PR-поток в quality gate |
@@ -31,27 +31,27 @@ Business Layer фиксирует, **что** делает система RRDCS 
 | BR-003 | Исполнитель проверок (Verification Executor) | BA-003 | Запускает и завершает пакеты проверок |
 | BR-004 | Аналитик доказательств (Evidence Reviewer) | BA-001, BA-002 | Анализирует сводку и логи |
 
-## 3. Бизнес-процессы
-| ID | Business Process | Триггер | Результат |
+## 3. Бизнес-процессы (Business Processes)
+| ID | Бизнес-процесс (Business Process) | Триггер | Результат |
 |---|---|---|---|
 | BP-001 | Управление политиками и фиксацией toolchain (Policy and Toolchain Pin Governance) | Запрос на изменение policy/toolchain | Актуальный baseline quality policy |
 | BP-002 | Оркестрация обязательных проверок PR (Pull Request Required Checks Orchestration) | `Pull Request Updated` | Зафиксированное merge-решение |
-| BP-003 | Выполнение базового набора проверок (Baseline Verification Set Execution) | Команда оркестрации `Run Required Verification Set` | Статусы и findings по checks |
+| BP-003 | Выполнение базового набора проверок (Baseline Verification Set Execution) | Команда оркестрации `Run Required Verification Set` | Статусы и findings по style/security/platform/architecture checks |
 | BP-004 | Публикация сводки и доказательств (Summary and Evidence Publication) | Готовность результатов run | PR summary + ссылки на logs/artifacts |
 | BP-005 | Подключение репозитория и rollout режима (Repository Onboarding and Rollout) | Запрос на onboarding нового репозитория | Репозиторий переведен в `audit`/`required` по профилю |
 
-## 4. Бизнес-сервисы и объекты
+## 4. Бизнес-сервисы и объекты (Business Services and Objects)
 
-### 4.1 Бизнес-сервисы
-| ID | Business Service | Предоставляется для | Реализуется через процессы |
+### 4.1 Бизнес-сервисы (Business Services)
+| ID | Бизнес-сервис (Business Service) | Предоставляется для | Реализуется через процессы |
 |---|---|---|---|
 | BS-001 | Сервис управления политиками (Policy Governance Service) | BR-002 | BP-001 |
 | BS-002 | Сервис качественных ворот (Quality Gate Service) | BR-001 | BP-002 |
 | BS-003 | Сервис верификации (Verification Service) | BR-003 | BP-003 |
 | BS-004 | Сервис отчетности и доказательств (Reporting and Evidence Service) | BR-004 | BP-004 |
 
-### 4.2 Бизнес-объекты
-| ID | Business Object | Назначение |
+### 4.2 Бизнес-объекты (Business Objects)
+| ID | Бизнес-объект (Business Object) | Назначение |
 |---|---|---|
 | BO-001 | Манифесты политик (Policy Manifests) | Source of truth для policy/config |
 | BO-002 | Снимок плана проверок (Check Plan Snapshot) | Актуальный план required/optional checks |
@@ -63,8 +63,8 @@ Business Layer фиксирует, **что** делает система RRDCS 
 
 ## 5. События и правила (инварианты)
 
-### 5.1 Ключевые события
-| ID | Business Event | Значение |
+### 5.1 Ключевые события (Business Events)
+| ID | Бизнес-событие (Business Event) | Значение |
 |---|---|---|
 | BE-001 | PR обновлен (Pull Request Updated) | Запуск gate-потока для PR |
 | BE-002 | План обязательных проверок определен (Required Check Plan Resolved) | Сформирован check-plan |
@@ -72,7 +72,7 @@ Business Layer фиксирует, **что** делает система RRDCS 
 | BE-004 | Решение по слиянию зафиксировано (Merge Decision Recorded) | Зафиксировано решение `allowed/blocked` |
 | BE-005 | Обязательная проверка завершилась ошибкой (Required Check Failed) | Зафиксирован fail обязательной проверки |
 
-### 5.2 Бизнес-инварианты
+### 5.2 Бизнес-инварианты (Business Invariants)
 - `BR-BL-01`: merge запрещен, если хотя бы один required check завершился со статусом `failed`.
 - `BR-BL-02`: для каждого PR-run фиксируется ровно одно итоговое merge-решение (`BE-004`).
 - `BR-BL-03`: публикация evidence обязательна для каждого failed check (summary + log/artifact reference).

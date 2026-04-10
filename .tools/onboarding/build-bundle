@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Wrapper for build_integration_bundle.py
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON="${PYTHON:-python3}"
+
+exec "$PYTHON" "$SCRIPT_DIR/build_integration_bundle.py" --output-dir .out --force "$@"

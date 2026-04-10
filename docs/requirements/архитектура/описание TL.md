@@ -11,7 +11,7 @@
   - `docs/requirements/обоснование выбора.md`
 
 ## 1. Назначение технологического слоя
-Technology Layer фиксирует, **на чем** выполняются прикладные сценарии quality gate:
+Технологический слой (Technology Layer) фиксирует, **на чем** выполняются прикладные сценарии quality gate:
 - hosted runners в GitHub Actions;
 - runtime-инструменты (Python/PowerShell/Bash/Git);
 - технологические сервисы (Checks API, Artifacts, Cache, Git Repository);
@@ -20,14 +20,14 @@ Technology Layer фиксирует, **на чем** выполняются пр
 ## 2. Узлы, ПО и технологические сервисы
 
 ### 2.1 Узлы (Nodes)
-| ID | Node | Назначение |
+| ID | Узел (Node) | Назначение |
 |---|---|---|
 | TN-001 | Linux-раннер GitHub (GitHub Linux Runner) | Выполнение Linux jobs для checks/orchestration |
 | TN-002 | Windows-раннер GitHub (GitHub Windows Runner) | Выполнение Windows jobs для checks/orchestration |
 | TN-003 | Рабочая станция разработчика (Developer Workstation) | Локальный запуск `check-all` |
 
 ### 2.2 Системное ПО (System Software)
-| ID | System Software | Назначение |
+| ID | Системное ПО (System Software) | Назначение |
 |---|---|---|
 | SW-001 | Среда выполнения GitHub Actions (GitHub Actions Runtime) | Исполнение workflow jobs |
 | SW-002 | Среда выполнения Python 3.12 (Python 3.12 Runtime) | Исполнение orchestration scripts |
@@ -36,7 +36,7 @@ Technology Layer фиксирует, **на чем** выполняются пр
 | SW-005 | Среда выполнения Git (Git Runtime) | Versioned storage и чтение policy/config |
 
 ### 2.3 Технологические сервисы (Technology Services)
-| ID | Technology Service | Используется AL-компонентами |
+| ID | Технологический сервис (Technology Service) | Используется AL-компонентами |
 |---|---|---|
 | TS-001 | Сервис GitHub Checks API (GitHub Checks API Service) | AC-001, AC-004 |
 | TS-002 | Сервис GitHub Artifacts (GitHub Artifacts Service) | AC-005 |
@@ -47,14 +47,14 @@ Technology Layer фиксирует, **на чем** выполняются пр
 ## 3. Интерфейсы, артефакты, сеть
 
 ### 3.1 Технологические интерфейсы (Technology Interfaces)
-| ID | Technology Interface | Назначение |
+| ID | Технологический интерфейс (Technology Interface) | Назначение |
 |---|---|---|
 | TIF-001 | Интерфейс webhook/событий PR (PR Webhook/Event Interface) | Доставка `pull_request` событий в workflow |
 | TIF-002 | Интерфейс загрузки артефактов (Artifact Upload Interface) | Публикация logs/summaries |
 | TIF-003 | Интерфейс доступа к кэшу (Cache Access Interface) | Чтение/запись CI-cache |
 
 ### 3.2 Артефакты (Artifacts)
-| ID | Artifact | Расположение |
+| ID | Артефакт (Artifact) | Расположение |
 |---|---|---|
 | AR-001 | Файлы workflow YAML (Workflow YAML Artifacts) | `.github/workflows/*` |
 | AR-002 | Скрипты проверок (Verification Scripts) | `.tools/*` |
@@ -65,14 +65,14 @@ Technology Layer фиксирует, **на чем** выполняются пр
 ### 3.3 Сеть и пути (Communication Network and Paths)
 | ID | Тип | Название | Назначение |
 |---|---|---|---|
-| CN-001 | Communication Network | Облачная сеть GitHub (GitHub Cloud Network) | Связность раннеров и GitHub services |
-| CN-002 | Communication Network | Локальная сеть разработчика (Local Developer Network) | Локальное окружение разработчика |
-| PT-001 | Path | Путь события PR (PR Event Path) | Путь `pull_request` -> workflow |
-| PT-002 | Path | Путь загрузки артефактов (Artifact Upload Path) | Путь публикации artifacts |
-| PT-003 | Path | Путь доступа к кэшу (Cache Access Path) | Путь доступа к cache |
+| CN-001 | Сеть связи (Communication Network) | Облачная сеть GitHub (GitHub Cloud Network) | Связность раннеров и GitHub services |
+| CN-002 | Сеть связи (Communication Network) | Локальная сеть разработчика (Local Developer Network) | Локальное окружение разработчика |
+| PT-001 | Путь (Path) | Путь события PR (PR Event Path) | Путь `pull_request` -> workflow |
+| PT-002 | Путь (Path) | Путь загрузки артефактов (Artifact Upload Path) | Путь публикации artifacts |
+| PT-003 | Путь (Path) | Путь доступа к кэшу (Cache Access Path) | Путь доступа к cache |
 
 ## 4. Размещение AL-компонентов на TL
-| AL Component | Основной Node | System Software |
+| Компонент AL (AL Component) | Основной узел (Node) | Системное ПО (System Software) |
 |---|---|---|
 | AC-001 Оркестратор workflow (Workflow Orchestrator) | TN-001/TN-002 | SW-001, SW-002 |
 | AC-002 Разрешатель политик (Policy Resolver) | TN-001/TN-002 | SW-001, SW-002, SW-005 |
@@ -81,6 +81,7 @@ Technology Layer фиксирует, **на чем** выполняются пр
 | AC-005 Публикатор доказательств (Evidence Publisher) | TN-001/TN-002 | SW-001, SW-002 |
 | AC-006 Локальный CLI предварительной проверки (Local Pre-check CLI `check-all`) | TN-003 | SW-002, SW-003, SW-004, SW-005 |
 | AC-007 Менеджер профилей интеграции репозитория (Repository Integration Profile Manager) | TN-001/TN-002 | SW-001, SW-002, SW-005 |
+| AC-008 Guard архитектуры (Architecture Guard) | TN-001/TN-002/TN-003 | SW-001, SW-002 |
 
 ## 5. Надежность, безопасность, наблюдаемость
 - **Надежность:** merge-gate опирается на обязательные status checks и branch protection.
@@ -110,7 +111,7 @@ Technology Layer фиксирует, **на чем** выполняются пр
 - `TS-004 -> AC-001`, `TS-004 -> AC-002`, `TS-004 -> AC-006`
 - `TS-005 -> AC-001`, `TS-005 -> AC-007`
 - `AR-001 -> AC-001`
-- `AR-002 -> AC-003`, `AR-002 -> AC-006`
+- `AR-002 -> AC-003`, `AR-002 -> AC-006`, `AR-002 -> AC-008`
 - `AR-003 -> AC-002`, `AR-003 -> AC-006`
 - `AR-004 -> AC-005`
 - `AR-005 -> AC-007`

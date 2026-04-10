@@ -8,7 +8,7 @@ actor "BC Оркестрация проверок качества (Quality Gate
 actor "BC Отчетность и доказательная база (Reporting and Evidence BC)" as RE
 
 rectangle "Пакеты проверок (Verification Packages)" {
-  usecase "Выполнить baseline набор проверок\n(Execute Baseline Verification Set)" as UC1
+  usecase "Выполнить базовый набор проверок\n(Execute Baseline Verification Set)" as UC1
   usecase "Запустить стилевые проверки\n(Run Style Checks)" as UC2
   usecase "Запустить проверки безопасности\n(Run Security Checks)" as UC3
   usecase "Запустить матрицу платформ\n(Run Platform Matrix Checks)" as UC4

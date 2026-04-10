@@ -1,0 +1,103 @@
+﻿{
+    "version":  "1.0",
+    "description":  "Шаблон check-plan для целевых репозиториев с пакетами quality-gates RRDCS",
+    "checks":  [
+                   {
+                       "id":  "encoding-gate",
+                       "title":  "Гейт целостности кодировки (детектирование mojibake)",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "encoding",
+                                    "required",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/check-encoding/check_encoding.py",
+                                       "--paths",
+                                       "."
+                                   ]
+                   },
+                   {
+                       "id":  "style-gates",
+                       "title":  "Пакет style (линтинг и форматирование)",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "required",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/style/run.py",
+                                       "--tool-runtime",
+                                       "docker"
+                                   ]
+                   },
+                   {
+                       "id":  "security-gates",
+                       "title":  "Пакет security (секреты и baseline SAST)",
+                       "group":  "security",
+                       "tags":  [
+                                    "security",
+                                    "required",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/security/run.py",
+                                       "--tool-runtime",
+                                       "docker"
+                                   ]
+                   },
+                   {
+                       "id":  "architecture-gates",
+                       "title":  "Пакет architecture (границы модулей)",
+                       "group":  "architecture",
+                       "tags":  [
+                                    "architecture",
+                                    "required",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/architecture/run.py"
+                                   ]
+                   },
+                   {
+                       "id":  "platform-gates",
+                       "title":  "Пакет platform (проверки кроссплатформенного runtime)",
+                       "group":  "platform",
+                       "tags":  [
+                                    "platform",
+                                    "required",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/platform/run.py"
+                                   ]
+                   }
+               ]
+}

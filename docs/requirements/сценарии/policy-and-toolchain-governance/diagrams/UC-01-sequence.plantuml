@@ -1,7 +1,7 @@
 ﻿@startuml UC_01_sequence
 !theme plain
 skinparam backgroundColor #FFFFFF
-title Сценарий UC-01: Управление изменениями policy и toolchain (Govern Policy and Toolchain Changes)
+title Сценарий UC-01: Управление изменениями политики и цепочки инструментов (Govern Policy and Toolchain Changes)
 
 actor "Разработчик (Developer)" as Dev
 participant "Git-репозиторий и поток PR (Git Repository and Pull Request Flow)" as PR
@@ -10,18 +10,18 @@ participant "Технический лидер и архитектор (Tech Lea
 participant "BC Оркестрация проверок качества (Quality Gate Orchestration BC)" as QGO
 participant "BC Пакеты проверок (Verification Packages BC)" as VP
 
-Dev -> PR : Отправить PR с изменением policy (Submit policy change PR)
-PR -> GOV : EVT Запрошено изменение policy (PolicyChangeRequested)
-Lead -> GOV : CMD Провести review изменения (ReviewPolicyChange)
+Dev -> PR : Отправить PR с изменением политики (Submit policy change PR)
+PR -> GOV : EVT Запрошено изменение политики (PolicyChangeRequested)
+Lead -> GOV : CMD Провести ревью изменения (ReviewPolicyChange)
 GOV -> GOV : CMD Проверить версии и пороги (ValidatePinnedVersionsAndThresholds)
-GOV --> Lead : EVT Проверка policy завершена (PolicyValidationCompleted)
+GOV --> Lead : EVT Проверка политики завершена (PolicyValidationCompleted)
 
 alt Изменение утверждено и валидно (Approved and valid)
-  GOV -> QGO : EVT Политика опубликована в оркестрацию (PolicyPublishedToOrchestrator)
-  GOV -> VP : CMD Опубликовать baseline в пакеты проверок (PublishBaselineToVerificationPackages)
+  GOV -> QGO : EVT Политика опубликована в оркестратор проверок (PolicyPublishedToOrchestrator)
+  GOV -> VP : CMD Опубликовать базовый набор (baseline) в пакеты проверок (PublishBaselineToVerificationPackages)
   GOV --> PR : EVT Решение governance зафиксировано: утверждено (GovernanceDecisionRecorded: approved)
 else Изменение отклонено или невалидно (Rejected or invalid)
-  GOV --> PR : EVT Изменение policy отклонено (PolicyChangeRejected)
+  GOV --> PR : EVT Изменение политики отклонено (PolicyChangeRejected)
 end
 
 @enduml

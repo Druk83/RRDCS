@@ -10,7 +10,7 @@ participant "Интерфейс PR / Хранилище артефактов (PR
 actor "Разработчик (Developer)" as Dev
 
 par Поступил статус gate-запуска (Gate run status arrived)
-  QGO -> RE : EVT Завершение gate-запуска (GateRunCompleted)
+  QGO -> RE : EVT Завершение запуска ворот качества (GateRunCompleted)
 else Поступили детали верификации (Verification details arrived)
   VP -> RE : EVT Детали верификации доступны (VerificationDetailsAvailable)
 end
@@ -19,9 +19,9 @@ note right of RE
 end note
 RE -> RE : CMD Сформировать сводку запуска (BuildRunSummary)
 RE -> UI : CMD Связать доказательные артефакты (LinkEvidenceArtifacts)
-UI --> RE : EVT Ссылки на evidence опубликованы (EvidenceLinksPublished)
+UI --> RE : EVT Ссылки на доказательства опубликованы (EvidenceLinksPublished)
 
-alt Все обязательные evidence доступны (All required evidence present)
+alt Все обязательные доказательства доступны (All required evidence present)
   RE -> UI : CMD Опубликовать сводку PR (PublishPRSummary)
   UI --> Dev : EVT Сводка PR опубликована (PRSummaryPublished)
 else Отсутствуют логи упавших проверок (Missing failed-check logs)

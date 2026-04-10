@@ -1,0 +1,102 @@
+﻿{
+    "version":  "1.0",
+    "description":  "Пример плана для полиглот-репозиториев (замените пути под свой репозиторий)",
+    "checks":  [
+                   {
+                       "id":  "shellcheck",
+                       "title":  "Линт shell-скриптов",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "shell",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "shellcheck",
+                                       "scripts/*.sh"
+                                   ]
+                   },
+                   {
+                       "id":  "hadolint",
+                       "title":  "Линт Dockerfile",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "docker",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "hadolint",
+                                       "Dockerfile"
+                                   ]
+                   },
+                   {
+                       "id":  "markdownlint",
+                       "title":  "Линт Markdown",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "docs",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "markdownlint",
+                                       "**/*.md"
+                                   ]
+                   },
+                   {
+                       "id":  "gitleaks",
+                       "title":  "Сканирование секретов",
+                       "group":  "security",
+                       "tags":  [
+                                    "security",
+                                    "secrets",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "gitleaks",
+                                       "detect",
+                                       "--source=.",
+                                       "--no-git",
+                                       "--verbose"
+                                   ]
+                   },
+                   {
+                       "id":  "tests-and-coverage",
+                       "title":  "Тесты и порог покрытия",
+                       "group":  "quality",
+                       "tags":  [
+                                    "tests",
+                                    "coverage",
+                                    "repository"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       "-m",
+                                       "pytest",
+                                       "--cov=src",
+                                       "--cov-fail-under=80"
+                                   ]
+                   }
+               ]
+}

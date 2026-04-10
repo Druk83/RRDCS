@@ -1,6 +1,6 @@
-﻿# `governance-decisions-log`
+# `Журнал решений governance (governance-decisions-log)`
 
-* тип: `document`
+* тип: `документ (document)`
 * назначение: Журнал решений по изменениям policy/toolchain.
 * владелец: `BC Управление политиками и цепочкой инструментов (Policy and Toolchain Governance BC)`
 * источники `docs/**`: `docs/requirements/сценарии/policy-and-toolchain-governance/каталог мероприятий.md`
@@ -21,7 +21,7 @@
 | decided_at | datetime | yes | no | ISO-8601 | Время решения |
 
 ## Правила
-* validation/schema: governance decision record.
+* валидация/схема: governance decision record.
 * индексы: не применяются.
 * примеры документов: release/governance notes.
 

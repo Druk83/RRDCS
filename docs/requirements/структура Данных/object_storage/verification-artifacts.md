@@ -1,6 +1,6 @@
-﻿# `verification-artifacts`
+# `Артефакты проверок (verification-artifacts)`
 
-* тип: `bucket`
+* тип: `контейнер (bucket)`
 * назначение: Логи и артефакты выполнения style/security/platform checks.
 * владелец: `BC Пакеты проверок (Verification Packages BC)`
 * источники `docs/**`: `docs/requirements/сценарии/verification-packages/каталог мероприятий.md`, `docs/requirements/сценарии/reporting-and-evidence/каталог мероприятий.md`
@@ -11,7 +11,7 @@
 * bucket: `github-actions-artifacts/verification`
 * объект/ключ: `<repo>/<workflow>/<run-id>/<check-code>/<file>`
 * метаданные: `run_id`, `pr_id`, `repository_slug`, `profile_version`, `check_code`, `platform`, `created_at`, `retention_days`
-* lifecycle/retention: по настроенной artifact retention policy
+* lifecycle/retention: по настроенной policy хранения артефактов (artifact retention policy)
 * доступ: GitHub permissions / repository access
 
 ## Использование
@@ -20,4 +20,4 @@
 * требования: FR-008, NFR-006.
 
 ## Примечания
-* Артефакты не являются source of truth правил; это доказательная база выполнения.
+* Артефакты не являются источником истины (source of truth) правил; это доказательная база выполнения.

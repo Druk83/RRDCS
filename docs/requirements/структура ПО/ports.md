@@ -1,4 +1,4 @@
-﻿# Справочник портов (Ports Reference) — RRDCS
+# Справочник портов (Ports Reference) — RRDCS
 
 ## 0. Контекст
 - **Проект:** RRDCS
@@ -11,9 +11,9 @@
 
 ## 1. Сводная таблица портов
 
-| Layer | Service | Host bind | Mapping (host:container) | Proto | Public/Internal | Purpose | Notes |
+| Слой | Сервис | Привязка хоста | Соответствие (host:container) | Протокол | Публичный/внутренний | Назначение | Примечания |
 |---|---|---|---|---|---|---|---|
-| TL (Technology Layer) | Локальный сервис Kroki (Local Kroki Service) | по умолчанию `0.0.0.0` через Docker publish | `${KROKI_PORT:-8000}:8000` | tcp | internal (рекомендуемо) | Рендер PlantUML диаграмм | Для безопасного режима рекомендуется bind на localhost |
+| TL (Технологический слой) | Локальный сервис Kroki (Local Kroki Service) | по умолчанию `0.0.0.0` через Docker publish | `${KROKI_PORT:-8000}:8000` | tcp | internal (рекомендуемо) | Рендер PlantUML диаграмм | Для безопасного режима рекомендуется bind на localhost |
 
 ## 2. Детализация сервиса
 
@@ -25,7 +25,7 @@
 - **Базовый URL:** `${KROKI_BASE_URL}` (по умолчанию `http://localhost:8000`)
 - **Назначение:** endpoint для `.tools/plantuml-render/plantuml_render.py`
 
-## 3. Порты прикладных сервисов (Application Layer)
+## 3. Порты прикладного слоя (Application Layer)
 - На текущем этапе прикладные сервисы с сетевыми портами отсутствуют.
 - Будущие порты AL/OBS/SEC добавляются после появления `.github/workflows/*` и/или runtime-сервисов.
 

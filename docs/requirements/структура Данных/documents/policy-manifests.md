@@ -1,6 +1,6 @@
-﻿# `policy-manifests`
+# `Манифесты политик (policy-manifests)`
 
-* тип: `document`
+* тип: `документ (document)`
 * назначение: Набор versioned policy/manifest файлов, определяющих обязательные проверки и правила качества.
 * владелец: `BC Управление политиками и цепочкой инструментов (Policy and Toolchain Governance BC)`
 * источники `docs/**`: `docs/requirements/домены/policy-and-toolchain-governance.md`, `docs/requirements/требования/требования_внутренний_стандарт.md`
@@ -19,7 +19,7 @@
 | effective_from | datetime | yes | no | ISO-8601 | Дата вступления |
 
 ## Правила
-* validation/schema: policy-contract в markdown/json-schema (будет формализован в этапе [8]).
+* валидация/схема: policy-contract в markdown/json-schema (будет формализован в этапе [8]).
 * индексы: не применяются (versioned files в Git).
 * примеры документов: policy YAML/JSON в репозитории.
 
@@ -29,5 +29,5 @@
 * требования: FR-005, FR-011, FR-012, NFR-004, NFR-007, NFR-009.
 
 ## Примечания
-* Source of truth — Git.
+* Источник истины (source of truth) — Git.
 * Изменения только через PR workflow.

@@ -1,6 +1,6 @@
-﻿# `run-summaries`
+# `Сводки запусков (run-summaries)`
 
-* тип: `bucket`
+* тип: `контейнер (bucket)`
 * назначение: Сводные результаты проверок PR (summary JSON/Markdown) для review и аудита.
 * владелец: `BC Отчетность и доказательная база (Reporting and Evidence BC)`
 * источники `docs/**`: `docs/requirements/сценарии/reporting-and-evidence/карта процесса.md`, `docs/requirements/сценарии/reporting-and-evidence/каталог мероприятий.md`
@@ -11,7 +11,7 @@
 * bucket: `github-actions-artifacts/run-summaries`
 * объект/ключ: `<repo>/<run-id>/summary.<json|md>`
 * метаданные: `run_id`, `pr_id`, `repository_slug`, `profile_version`, `overall_status`, `failed_checks_count`, `generated_at`
-* lifecycle/retention: по artifact retention policy
+* lifecycle/retention: по policy хранения артефактов (artifact retention policy)
 * доступ: участники PR и роли с правами чтения артефактов
 
 ## Использование

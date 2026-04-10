@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Wrapper for check_all.py
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PYTHON="${PYTHON:-python3}"
+
+exec "$PYTHON" "$SCRIPT_DIR/check_all.py" "$@"

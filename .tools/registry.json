@@ -1,0 +1,156 @@
+[
+  {
+    "name": "check-all",
+    "path": ".tools/check-all/check_all.py",
+    "entry": "python .tools/check-all/check_all.py",
+    "entry_win": ".tools/check-all/check-all.bat",
+    "entry_unix": ".tools/check-all/check-all",
+    "desc": "Run local RRDCS pre-check plan from .tools/check-all/check-plan.json",
+    "tags": ["checks", "precheck", "quality-gate", "orchestration"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "check-encoding",
+    "path": ".tools/check-encoding/check_encoding.py",
+    "entry": "python .tools/check-encoding/check_encoding.py --paths .",
+    "entry_win": ".tools/check-encoding/check-encoding.bat -Paths .",
+    "entry_unix": "python .tools/check-encoding/check_encoding.py --paths .",
+    "desc": "Detect mojibake-like encoding artifacts in repository text files",
+    "tags": ["checks", "style", "encoding", "quality-gate"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "quality-gate-style",
+    "path": ".tools/quality-gates/style/run.py",
+    "entry": "python .tools/quality-gates/style/run.py",
+    "entry_win": "python .tools/quality-gates/style/run.py",
+    "entry_unix": "python .tools/quality-gates/style/run.py",
+    "desc": "Run style verification package (shellcheck, hadolint, markdownlint, actionlint)",
+    "tags": ["checks", "style", "quality-gate", "package"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "quality-gate-security",
+    "path": ".tools/quality-gates/security/run.py",
+    "entry": "python .tools/quality-gates/security/run.py",
+    "entry_win": "python .tools/quality-gates/security/run.py",
+    "entry_unix": "python .tools/quality-gates/security/run.py",
+    "desc": "Run security verification package (gitleaks + SAST profile baseline)",
+    "tags": ["checks", "security", "quality-gate", "package"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "quality-gate-platform",
+    "path": ".tools/quality-gates/platform/run.py",
+    "entry": "python .tools/quality-gates/platform/run.py",
+    "entry_win": "python .tools/quality-gates/platform/run.py",
+    "entry_unix": "python .tools/quality-gates/platform/run.py",
+    "desc": "Run platform verification package (runtime and CI cross-platform baseline)",
+    "tags": ["checks", "platform", "quality-gate", "package"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "quality-gate-architecture",
+    "path": ".tools/quality-gates/architecture/run.py",
+    "entry": "python .tools/quality-gates/architecture/run.py",
+    "entry_win": "python .tools/quality-gates/architecture/run.py",
+    "entry_unix": "python .tools/quality-gates/architecture/run.py",
+    "desc": "Run architecture boundary guard (module import boundaries)",
+    "tags": ["checks", "architecture", "quality-gate", "package"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "reporting-build-gate-report",
+    "path": ".tools/reporting/build_gate_report.py",
+    "entry": "python .tools/reporting/build_gate_report.py --help",
+    "entry_win": "python .tools/reporting/build_gate_report.py --help",
+    "entry_unix": "python .tools/reporting/build_gate_report.py --help",
+    "desc": "Build aggregated gate-decision report (JSON + Markdown) for PR summary and artifacts",
+    "tags": ["reporting", "evidence", "quality-gate"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "reporting-build-pr-size-report",
+    "path": ".tools/reporting/build_pr_size_report.py",
+    "entry": "python .tools/reporting/build_pr_size_report.py --help",
+    "entry_win": "python .tools/reporting/build_pr_size_report.py --help",
+    "entry_unix": "python .tools/reporting/build_pr_size_report.py --help",
+    "desc": "Build PR size report (warning-only small PR policy)",
+    "tags": ["reporting", "quality-gate", "pr-size"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "onboarding-validate-profile",
+    "path": ".tools/onboarding/validate_profile.py",
+    "entry": "python .tools/onboarding/validate_profile.py --help",
+    "entry_win": "python .tools/onboarding/validate_profile.py --help",
+    "entry_unix": "python .tools/onboarding/validate_profile.py --help",
+    "desc": "Validate repository integration profile against onboarding policy",
+    "tags": ["onboarding", "profile", "governance", "validation"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "onboarding-export-profile-context",
+    "path": ".tools/onboarding/export_profile_context.py",
+    "entry": "python .tools/onboarding/export_profile_context.py --help",
+    "entry_win": "python .tools/onboarding/export_profile_context.py --help",
+    "entry_unix": "python .tools/onboarding/export_profile_context.py --help",
+    "desc": "Export repository profile values for reusable workflow context",
+    "tags": ["onboarding", "profile", "workflow", "context"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "onboarding-promote-profile",
+    "path": ".tools/onboarding/promote_profile.py",
+    "entry": "python .tools/onboarding/promote_profile.py --help",
+    "entry_win": "python .tools/onboarding/promote_profile.py --help",
+    "entry_unix": "python .tools/onboarding/promote_profile.py --help",
+    "desc": "Promote repository profile enforcement mode from audit to required",
+    "tags": ["onboarding", "profile", "promotion", "governance"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "onboarding-build-integration-bundle",
+    "path": ".tools/onboarding/build_integration_bundle.py",
+    "entry": "python .tools/onboarding/build_integration_bundle.py --output-dir .out --force",
+    "entry_win": ".tools/onboarding/build-bundle.bat",
+    "entry_unix": "bash .tools/onboarding/build-bundle",
+    "desc": "Build out-folder bundle with files required to integrate RRDCS into another repository",
+    "tags": ["onboarding", "bundle", "integration", "multi-repo"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "pdd-scan",
+    "path": ".tools/pdd/pdd_scan.py",
+    "entry": "python .tools/pdd/pdd_scan.py --format md --write",
+    "entry_win": ".tools/pdd/pdd-scan.bat --format md --write",
+    "entry_unix": ".tools/pdd/pdd-scan --format md --write",
+    "desc": "Scan @todo and update .tasks/pdd/@todoregistry.md",
+    "tags": ["pdd","scan"],
+    "exec": true,
+    "runtime": "python"
+  },
+  {
+    "name": "plantuml-render",
+    "path": ".tools/plantuml-render/plantuml_render.py",
+    "entry": "python .tools/plantuml-render/plantuml_render.py --format png",
+    "entry_win": ".tools/plantuml-render/plantuml-render.bat --format png",
+    "entry_unix": ".tools/plantuml-render/plantuml-render --format png",
+    "desc": "Render .plantuml files to PNG/SVG via configurable Kroki endpoint",
+    "tags": ["plantuml", "diagram", "render", "visualization"],
+    "exec": true,
+    "runtime": "python"
+  }
+]

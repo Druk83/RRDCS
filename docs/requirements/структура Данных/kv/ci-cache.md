@@ -1,6 +1,6 @@
-﻿# `ci-cache`
+# `Кэш CI (ci-cache)`
 
-* тип: `kv-namespace`
+* тип: `kv-пространство (kv-namespace)`
 * назначение: Эфемерный кэш зависимостей и инструментов для ускорения CI.
 * владелец: `BC Пакеты проверок (Verification Packages BC)`
 * источники `docs/**`: `docs/requirements/обоснование выбора.md`
@@ -11,7 +11,7 @@
 * namespace: `gh-actions-cache`
 * формат ключа: `<repo>:<os>:<toolchain-version>:<lock-hash>`
 * значения: архив зависимостей/инструментов
-* TTL/retention: управляется cache policy GitHub
+* TTL/retention: управляется policy кэша GitHub
 * атомарность/консистентность: best-effort, допустим cache miss
 
 ## Использование

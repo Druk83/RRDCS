@@ -8,7 +8,7 @@ actor "Разработчик (Developer)" as Dev
 actor "API pull request в GitHub (GitHub Pull Request API)" as GH
 
 rectangle "Оркестрация проверок качества (Quality Gate Orchestration)" {
-  usecase "Оркестрировать решение quality gate для PR\n(Orchestrate PR Quality Gate Decision)" as UC1
+  usecase "Оркестрировать решение по воротам качества для PR\n(Orchestrate PR Quality Gate Decision)" as UC1
   usecase "Разрешить план обязательных проверок\n(Resolve Required Check Plan)" as UC2
   usecase "Запустить набор обязательных проверок\n(Run Required Verification Set)" as UC3
   usecase "Зафиксировать решение по слиянию\n(Record Merge Decision)" as UC4

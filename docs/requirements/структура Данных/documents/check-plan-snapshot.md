@@ -1,7 +1,7 @@
-﻿# `check-plan-snapshot`
+# `Снимок плана проверок (check-plan-snapshot)`
 
-* тип: `document`
-* назначение: Снимок resolved check-плана для конкретного запуска проверки PR.
+* тип: `документ (document)`
+* назначение: Снимок разрешенного check-плана (resolved check-plan) для конкретного запуска проверки PR.
 * владелец: `BC Оркестрация проверок качества (Quality Gate Orchestration BC)`
 * источники `docs/**`: `docs/requirements/сценарии/quality-gate-orchestration/карта процесса.md`, `docs/requirements/сценарии/quality-gate-orchestration/каталог мероприятий.md`
 * источники проверки: GitHub workflow run metadata / generated JSON summary
@@ -20,7 +20,7 @@
 | created_at | datetime | yes | no | ISO-8601 | Время генерации |
 
 ## Правила
-* validation/schema: JSON contract для snapshot.
+* валидация/схема: JSON contract для snapshot.
 * индексы: не применяются.
 * примеры документов: run snapshot JSON в artifacts.
 

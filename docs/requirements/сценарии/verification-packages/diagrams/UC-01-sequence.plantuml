@@ -9,7 +9,7 @@ participant "Инструменты стилевых проверок (Style Che
 participant "Инструменты проверок безопасности (Security Checker Tooling)" as SEC
 participant "BC Отчетность и доказательная база (Reporting and Evidence BC)" as RE
 
-QGO -> VP : CMD Запустить набор обязательных проверок (StartRequiredVerificationSet)
+QGO -> VP : CMD Запустить обязательный набор проверок (StartRequiredVerificationSet)
 VP -> STYLE : CMD Запустить стилевые проверки (RunStyleChecks)
 STYLE --> VP : EVT Стилевые проверки завершены (StyleChecksCompleted)
 VP -> SEC : CMD Запустить проверки безопасности (RunSecurityChecks)
@@ -21,7 +21,7 @@ alt Блокирующие находки отсутствуют (No blocking fi
   VP -> QGO : EVT Набор проверок опубликован: успешно (VerificationSetPublished: passed)
   VP -> RE : EVT Детали проверок доступны (VerificationDetailsAvailable)
 else Есть блокирующие находки (Blocking findings exist)
-  VP -> QGO : EVT Обнаружена блокирующая уязвимость (BlockingSecurityFindingDetected)
+  VP -> QGO : EVT Обнаружена блокирующая находка безопасности (BlockingSecurityFindingDetected)
   VP -> RE : EVT Детали проверок доступны (VerificationDetailsAvailable)
 end
 

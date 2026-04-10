@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+pwsh -File "$(dirname "$0")/check-encoding.ps1" "$@"
+

@@ -1,7 +1,7 @@
-﻿# `check-run-events`
+# `Поток событий проверок (check-run-events)`
 
-* тип: `topic`
-* назначение: Поток событий выполнения проверок и статусов quality gates.
+* тип: `топик (topic)`
+* назначение: Поток событий выполнения проверок и статусов ворот качества (quality gates).
 * владелец: `BC Оркестрация проверок качества (Quality Gate Orchestration BC)`
 * источники `docs/**`: `docs/requirements/сценарии/*/каталог мероприятий.md`
 * источники проверки: GitHub Checks API / workflow events
@@ -12,7 +12,7 @@
 * схема сообщения: envelope + payload события (`eventId`, `eventType`, `eventVersion`, `correlationId`, `causationId`, `repositorySlug`, `payload`)
 * совместимость: backward-compatible additions
 * партиции/ключ: `pr_id` / `run_id` (логический ключ)
-* retention: определяется политикой GitHub и artifact retention
+* retention: определяется политикой GitHub и retention для artifacts
 
 ## Использование
 * сценарии: UC-QGO-01, UC-VP-01, UC-RE-01.

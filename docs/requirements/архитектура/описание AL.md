@@ -11,7 +11,7 @@
   - `docs/requirements/структура Данных/описание Данных.md`
 
 ## 1. Назначение прикладного слоя
-Application Layer фиксирует, **как** реализуется бизнес-поток quality gate:
+Прикладной слой (Application Layer) фиксирует, **как** реализуется бизнес-поток quality gate:
 - получение PR-событий;
 - разрешение плана обязательных проверок;
 - выполнение пакетов проверок;
@@ -20,7 +20,7 @@ Application Layer фиксирует, **как** реализуется бизн
 
 ## 2. Компоненты и интерфейсы
 
-### 2.1 Application Components
+### 2.1 Прикладные компоненты (Application Components)
 | ID | Component | Назначение |
 |---|---|---|
 | AC-001 | Оркестратор workflow (Workflow Orchestrator) | Управляет последовательностью AP-001..AP-006 |
@@ -30,8 +30,9 @@ Application Layer фиксирует, **как** реализуется бизн
 | AC-005 | Публикатор доказательств (Evidence Publisher) | Формирует summary и публикует ссылки на artifacts/logs |
 | AC-006 | Локальный CLI предварительной проверки (Local Pre-check CLI `check-all`) | Запускает core checks вне CI с паритетом к PR gates |
 | AC-007 | Менеджер профилей интеграции репозитория (Repository Integration Profile Manager) | Управляет onboarding/rollout режимами `audit|required` по репозиториям |
+| AC-008 | Guard архитектуры (Architecture Guard) | Проверяет границы модулей и внутренних импортов в `.tools/*` |
 
-### 2.2 Application Interfaces
+### 2.2 Интерфейсы прикладного слоя (Application Interfaces)
 | ID | Interface | Используется компонентами | Назначение |
 |---|---|---|---|
 | AI-001 | Интерфейс событий PR (PR Event Interface) | AC-001 | Вход событий `pull_request` |
@@ -43,18 +44,18 @@ Application Layer фиксирует, **как** реализуется бизн
 
 ## 3. Прикладные процессы и события
 
-### 3.1 Application Processes
-| ID | Application Process | Реализует BL-процесс | Участники |
+### 3.1 Прикладные процессы (Application Processes)
+| ID | Прикладной процесс (Application Process) | Реализует BL-процесс | Участники |
 |---|---|---|---|
 | AP-001 | Обработка события PR (Process PR Event) | BP-002 | AC-001, AI-001 |
 | AP-002 | Разрешение обязательных проверок (Resolve Required Checks) | BP-001, BP-002 | AC-001, AC-002, AI-002 |
-| AP-003 | Запуск набора проверок (Run Verification Set) | BP-003 | AC-001, AC-003, AC-006, AI-003, AI-005 |
+| AP-003 | Запуск набора проверок (Run Verification Set) | BP-003 | AC-001, AC-003, AC-006, AC-008, AI-003, AI-005 |
 | AP-004 | Расчет решения о слиянии (Calculate Merge Decision) | BP-002 | AC-004 |
 | AP-005 | Публикация доказательств (Publish Evidence) | BP-004 | AC-005, AI-004 |
 | AP-006 | Применение профиля интеграции репозитория (Apply Repository Integration Profile) | BP-005 | AC-007, AC-001, AI-006 |
 
-### 3.2 Application Events
-| ID | Application Event | Генерируется в | Назначение |
+### 3.2 События прикладного слоя (Application Events)
+| ID | Событие прикладного слоя (Application Event) | Генерируется в | Назначение |
 |---|---|---|---|
 | AE-001 | Событие PR получено (PR Event Received) | вход в AP-001 | Начало orchestration-run |
 | AE-002 | План обязательных проверок разрешен (Required Plan Resolved) | AP-002 | Передача check-plan в runner |
@@ -63,17 +64,17 @@ Application Layer фиксирует, **как** реализуется бизн
 | AE-005 | Доказательства опубликованы (Evidence Published) | AP-005 | Завершение run-потока |
 | AE-006 | Профиль интеграции применен (Repository Profile Applied) | AP-006 | Актуализирован режим `audit|required` для репозитория |
 
-### 3.3 Application Services
-| ID | Application Service | Предоставляется через |
+### 3.3 Сервисы прикладного слоя (Application Services)
+| ID | Сервис прикладного слоя (Application Service) | Предоставляется через |
 |---|---|---|
 | AS-001 | Сервис разрешения плана проверок (Check Plan Resolution Service) | AC-001 + AC-002 + AI-002 |
-| AS-002 | Сервис выполнения проверок (Verification Execution Service) | AC-003 + AC-006 + AI-003 |
+| AS-002 | Сервис выполнения проверок (Verification Execution Service) | AC-003 + AC-006 + AC-008 + AI-003 |
 | AS-003 | Сервис решения о слиянии (Merge Decision Service) | AC-004 |
 | AS-004 | Сервис публикации доказательств (Evidence Publication Service) | AC-005 + AI-004 |
 | AS-005 | Сервис управления onboarding/rollout (Repository Onboarding and Rollout Service) | AC-007 + AI-006 |
 
-## 4. Data Objects и доступ
-| ID | Data Object | Производится/читается |
+## 4. Объекты данных (Data Objects) и доступ
+| ID | Объект данных (Data Object) | Производится/читается |
 |---|---|---|
 | DO-001 | Манифесты политик (Policy Manifests) | AC-002 читает |
 | DO-002 | Снимок плана проверок (Check Plan Snapshot) | AC-002 формирует, AC-001/AC-003 читают |
@@ -89,6 +90,7 @@ Application Layer фиксирует, **как** реализуется бизн
 - `AL-C2 Observability`: единый `correlationId=pr_id`, публикация summary и ссылок на логи.
 - `AL-C3 Decision Safety`: merge-решение валидно только при полном наборе required check-статусов.
 - `AL-C4 Parity`: `check-all` сохраняет паритет core checks с PR gates.
+- `AL-C5 Architecture Boundary Integrity`: executable guard проверяет, что внутренние импорты `.tools/*` не нарушают границы модулей.
 
 ## 6. Ограничения AL
 - Логика orchestration находится в scripts/workflow и не зависит от конкретной CI-платформы на уровне доменных правил.

@@ -1,0 +1,180 @@
+﻿{
+    "version":  "1.0",
+    "description":  "Базовый локальный smoke-план для репозитория RRDCS",
+    "checks":  [
+                   {
+                       "id":  "tooling-core-files",
+                       "title":  "Базовая проверка tooling: обязательные файлы check-all",
+                       "group":  "governance",
+                       "tags":  [
+                                    "governance",
+                                    "baseline",
+                                    "tooling"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/check-all/check_governance_baseline.py"
+                                   ]
+                   },
+                   {
+                       "id":  "style-python-syntax-baseline",
+                       "title":  "Базовая проверка style: синтаксис Python для скриптов check-all",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "baseline",
+                                    "tooling"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/check-all/check_style_baseline.py"
+                                   ]
+                   },
+                   {
+                       "id":  "security-env-ignore-policy",
+                       "title":  "Базовая проверка security: политика игнорирования .env",
+                       "group":  "security",
+                       "tags":  [
+                                    "security",
+                                    "baseline",
+                                    "tooling"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/check-all/check_security_baseline.py"
+                                   ]
+                   },
+                   {
+                       "id":  "onboarding-profile-baseline",
+                       "title":  "Базовая проверка onboarding: валидация профиля интеграции репозитория",
+                       "group":  "governance",
+                       "tags":  [
+                                    "governance",
+                                    "onboarding",
+                                    "baseline",
+                                    "tooling"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/onboarding/validate_profile.py",
+                                       "--profile",
+                                       ".sources/.manifest/profiles/repository-integration-profile.rrdcs-tooling.yaml"
+                                   ]
+                   },
+                   {
+                       "id":  "architecture-module-boundaries",
+                       "title":  "Базовая проверка architecture: границы модулей и внутренних импортов",
+                       "group":  "architecture",
+                       "tags":  [
+                                    "architecture",
+                                    "baseline",
+                                    "tooling"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/architecture/run.py"
+                                   ]
+                   },
+                   {
+                       "id":  "encoding-mojibake-check",
+                       "title":  "Базовая проверка кодировок: детектирование mojibake",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "encoding",
+                                    "baseline",
+                                    "tooling"
+                                ],
+                       "required":  true,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/check-encoding/check_encoding.py",
+                                       "--paths",
+                                       "."
+                                   ]
+                   },
+                   {
+                       "id":  "style-package-smoke",
+                       "title":  "Smoke-прогон пакета style",
+                       "group":  "style",
+                       "tags":  [
+                                    "style",
+                                    "smoke",
+                                    "quality-gates"
+                                ],
+                       "required":  false,
+                       "success_codes":  [
+                                             0,
+                                             2
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/style/run.py",
+                                       "--allow-missing-tools",
+                                       "--dry-run"
+                                   ]
+                   },
+                   {
+                       "id":  "security-package-smoke",
+                       "title":  "Smoke-прогон пакета security",
+                       "group":  "security",
+                       "tags":  [
+                                    "security",
+                                    "smoke",
+                                    "quality-gates"
+                                ],
+                       "required":  false,
+                       "success_codes":  [
+                                             0,
+                                             2
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/security/run.py",
+                                       "--allow-missing-tools",
+                                       "--dry-run"
+                                   ]
+                   },
+                   {
+                       "id":  "platform-package-smoke",
+                       "title":  "Smoke-прогон пакета platform",
+                       "group":  "platform",
+                       "tags":  [
+                                    "platform",
+                                    "smoke",
+                                    "quality-gates"
+                                ],
+                       "required":  false,
+                       "success_codes":  [
+                                             0
+                                         ],
+                       "command":  [
+                                       "python",
+                                       ".tools/quality-gates/platform/run.py"
+                                   ]
+                   }
+               ]
+}

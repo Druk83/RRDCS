@@ -1,7 +1,7 @@
 ﻿@startuml UC_02_sequence
 !theme plain
 skinparam backgroundColor #FFFFFF
-title Сценарий UC-02: Подключение репозитория и rollout режима (Repository Onboarding and Rollout)
+title Сценарий UC-02: Подключение репозитория и поэтапное развертывание (staged rollout, pilot first)
 
 actor "Технический лидер и архитектор (Tech Lead and Architect)" as Lead
 participant "BC Управление политиками и цепочкой инструментов (Policy and Toolchain Governance BC)" as GOV
@@ -10,18 +10,18 @@ participant "Git-репозиторий и поток PR (Git Repository and Pul
 participant "BC Отчетность и доказательная база (Reporting and Evidence BC)" as RE
 
 Lead -> GOV : CMD Создать профиль интеграции (CreateRepositoryIntegrationProfile)
-GOV -> GOV : EVT План onboarding сформирован (RepositoryOnboardingPlanned)
-GOV -> QGO : CMD Опубликовать профиль в оркестрацию (PublishProfileToOrchestrator)
-GOV --> PR : EVT Репозиторий подключен в audit (RepositoryOnboardedInAuditMode)
-GOV --> RE : EVT Репозиторий подключен в audit (RepositoryOnboardedInAuditMode)
+GOV -> GOV : EVT План онбординга сформирован (RepositoryOnboardingPlanned)
+GOV -> QGO : CMD Опубликовать профиль в оркестратор (PublishProfileToOrchestrator)
+GOV --> PR : EVT Репозиторий подключен в режиме аудита (RepositoryOnboardedInAuditMode)
+GOV --> RE : EVT Репозиторий подключен в режиме аудита (RepositoryOnboardedInAuditMode)
 
 alt Качество стабильно (Quality stable)
-  Lead -> GOV : CMD Перевести в required режим (PromoteRepositoryToRequiredMode)
-  GOV -> QGO : EVT Репозиторий переведен в required (RepositoryPromotedToRequired)
-  GOV -> RE : EVT Репозиторий переведен в required (RepositoryPromotedToRequired)
+  Lead -> GOV : CMD Перевести в обязательный режим (required mode) (PromoteRepositoryToRequiredMode)
+  GOV -> QGO : EVT Репозиторий переведен в обязательный режим (required mode) (RepositoryPromotedToRequired)
+  GOV -> RE : EVT Репозиторий переведен в обязательный режим (required mode) (RepositoryPromotedToRequired)
 else Качество нестабильно (Quality unstable)
   note over Lead,GOV
-    Репозиторий остается в режиме audit\nдо стабилизации quality-метрик
+    Первый rollout выполняется на одном pilot-репозитории.\nРепозиторий остается в режиме аудита\nдо стабилизации метрик качества.
   end note
 end
 

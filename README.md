@@ -1,47 +1,85 @@
-# RRDCS — Repository Rules for Code Safety
+# RRDCS — правила репозитория для безопасности кода
 
-**RRDCS** — это методология и набор репозиторных инструментов, которые защищают кодовую базу от деградации (в том числе при активном использовании ИИ) за счет воспроизводимых правил и обязательных автоматических quality gates.
+RRDCS — это набор правил, манифестов и инструментов для репозитория, который удерживает качество и безопасность изменений через воспроизводимые проверки, обязательные шлюзы pull request (PR gates) и профиль подключения репозитория.
 
-## Ключевые возможности
-- Операционная модель: `локальный pre-check + обязательные PR gates в GitHub Actions`.
-- Единый инженерный контракт через `AGENTS.md` и манифесты `.manifest/*`.
-- Управление политиками и версиями toolchain (pinning, governance decisions).
-- Оркестрация required checks с блокировкой merge при любом fail.
-- Пакеты проверок (style/security/platform) и доказательная отчетность (summary + artifacts).
-- Кросс-платформенная модель разработки и исполнения (Windows/Linux, локально и в CI).
-- Простое подключение нового репозитория через профиль интеграции репозитория (Repository Integration Profile) и reusable workflow.
+## Первый шаг
+Если нужно подготовить пакет интеграции RRDCS для другого репозитория, сначала собери `.out/`:
 
-## High-Level архитектура
-1. Изменение попадает в `Pull Request`.
-2. Оркестратор quality gates получает required check-plan из policy-слоя.
-3. Исполняются пакеты проверок и формируется merge decision.
-4. Результаты публикуются в PR как summary и доказательная база (logs/artifacts).
+```bash
+python .tools/onboarding/build_integration_bundle.py --output-dir .out --force
+```
 
-## Ближайшие анонсы проекта
-- Внедрение обязательных `PR gates` в `GitHub Actions` как единого механизма допуска изменений в основную ветку.
-- Запуск baseline-проверок безопасности (`secret scanning`, `SAST`) в обязательном контуре PR.
-- Закрепление matrix-исполнения проверок минимум для `Windows` и `Linux`.
-- Сохранение режима `coverage` как метрики на MVP с последующим переходом к блокирующим порогам.
-- Развитие модели хранения: на MVP используется гибрид `Git + Checks + Artifacts + Cache`, при росте аналитических задач возможен переход к выделенному хранилищу.
+Это дает готовый набор файлов для переноса:
+- `.github/workflows/` с готовыми рабочими процессами (workflows) для PR gates;
+- `.github/policies/` и `.github/profiles/` с настройками подключения;
+- `.tools/setup/` со скриптами для локальной проверки и подготовки Docker;
+- `.out/.github/README.md` с инструкцией по запуску в целевом репозитории.
 
-## Интеграция в разные репозитории
-1. В целевом репозитории подключается `RRDCS`-профиль: состав required checks, версии runtime/toolchain и режим внедрения (`audit` или `required`).
-2. В `GitHub Actions` подключается reusable workflow с вызовом `.tools/*` и публикацией summary/artifacts.
-3. На старте можно включить `audit`, затем перевести репозиторий в `required` после стабилизации.
-4. Управление выполняется через versioned policy/manifests: rollout по версиям и быстрый rollback на предыдущий профиль.
+Если тебе не нужен пакет интеграции, а нужна работа с уже подключенным репозиторием, переходи сразу к `check-all` и документации ниже.
 
-## Статус документации
-- Этапы трека `[1]-[9]` завершены (`CLOSED`).
-- Текущее состояние см. в `docs/requirements/gap-tracking.md`.
+## Что здесь есть
+- Локальная предварительная проверка и обязательные PR gates в GitHub Actions.
+- Профиль подключения репозитория и режимы внедрения `audit -> required`.
+- Пакеты проверок `style`, `security`, `platform` и `architecture`.
+- Генерация доказательств (evidence) в `JSON` и `Markdown`, а также артефактов.
+- Документация требований, архитектуры, сценариев, тестирования, релиза и операций.
+- Манифесты правил и процессов в `.sources/.manifest/`.
 
-## Ключевые ссылки
-- Предметная область: `docs/requirements/предметная область.md`
-- Обоснование выбора: `docs/requirements/обоснование выбора.md`
-- Требования: `docs/requirements/требования/требования_внутренний_стандарт.md`
-- Домены: `docs/requirements/домены/реестр.md`
-- Сценарии: `docs/requirements/сценарии/`
-- Структура данных: `docs/requirements/структура Данных/описание Данных.md`
-- Архитектура (BL/AL/TL): `docs/requirements/архитектура/`
-- Структура ПО: `docs/requirements/структура ПО/`
-- Тестирование: `docs/requirements/тестирование/`
-- Манифесты процесса: `.manifest/`
+## Как устроен проект
+1. Изменение проходит локальный `check-all`.
+2. Затем срабатывают PR gates в GitHub Actions.
+3. Результаты публикуются как краткий отчет (summary) и артефакты (artifacts).
+4. При подключении профиль репозитория переводится из `audit` в `required`.
+
+## Быстрый старт
+```bash
+python .tools/check-all/check_all.py
+python .tools/plantuml-render/plantuml_render.py --path docs/requirements/
+python .tools/onboarding/build_integration_bundle.py --output-dir .out --force
+```
+
+Для локального рендеринга диаграмм с Docker см. [`.tools/plantuml-render/README.md`](.tools/plantuml-render/README.md).
+
+## Ключевые разделы
+- `docs/requirements/` — требования, сценарии, архитектура, тестирование и структура данных.
+- `docs/operations/github-ops-baseline.md` — базовый операционный контур GitHub.
+- `docs/release/mvp-release-plan.md` — план релиза MVP.
+- `.tasks/` — текущие задачи и архив выполненных задач.
+- `.issues/` — проблемы и инциденты.
+- `.sources/.manifest/` — исходные манифесты, политики и шаблоны.
+- `.tools/` — автоматизация, проверки, рендеринг диаграмм и onboarding.
+
+## Ключевые инструменты
+- [`check-all`](.tools/check-all/README.md) — локальный агрегатор проверок.
+- [`onboarding`](.tools/onboarding/README.md) — валидация профиля, перевод режима и пакет интеграции.
+- [`plantuml-render`](.tools/plantuml-render/README.md) — рендер PlantUML-диаграмм.
+- [`quality-gates`](.tools/quality-gates/) — пакеты проверок качества.
+- [`reporting`](.tools/reporting/) — генерация отчетов и доказательств (evidence).
+- [`check-encoding`](.tools/check-encoding/) — проверка кодировок и искажений текста (mojibake).
+- [`pdd`](.tools/pdd/) — сканирование `@todo` и реестр задач.
+
+## Документация
+- [Предметная область](docs/requirements/предметная%20область.md)
+- [Обоснование выбора](docs/requirements/обоснование%20выбора.md)
+- [Внутренний стандарт требований](docs/requirements/требования/требования_внутренний_стандарт.md)
+- [Реестр разрывов](docs/requirements/gap-tracking.md)
+- [Архитектура](docs/requirements/архитектура/)
+- [Сценарии](docs/requirements/сценарии/)
+- [Тестирование](docs/requirements/тестирование/)
+
+## Коротко о правилах
+- Основной язык документации — русский, английские термины допускаются в скобках как уточнение.
+- Подробные правила оформления README находятся в [`.sources/.manifest/readmemanifest.md`](.sources/.manifest/readmemanifest.md).
+- Правила иерархии документов находятся в [`.sources/.manifest/hierarchymanifest.md`](.sources/.manifest/hierarchymanifest.md).
+- Правила для задач находятся в [`.sources/.manifest/taskmanifest.md`](.sources/.manifest/taskmanifest.md).
+
+## Статус
+- Этапы трека `[1]-[9]` завершены.
+- Текущее состояние gap-tracking см. в [docs/requirements/gap-tracking.md](docs/requirements/gap-tracking.md).
+
+## Проверка
+Если нужно быстро проверить состояние репозитория, запусти:
+
+```bash
+python .tools/check-all/check_all.py
+```
