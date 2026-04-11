@@ -42,8 +42,9 @@ python .tools/onboarding/build_integration_bundle.py --output-dir .out --force
 
 ## Ключевые разделы
 - `docs/requirements/` — требования, сценарии, архитектура, тестирование и структура данных.
-- `docs/operations/github-ops-baseline.md` — базовый операционный контур GitHub.
-- `docs/release/mvp-release-plan.md` — план релиза MVP.
+- `docs/operations/базовый-операционный-контур-гитхаб.md` — базовый операционный контур GitHub.
+- `docs/release/план-релиза-мвп.md` — план релиза MVP.
+- `docs/release/план-следующего-этапа.md` — план следующего этапа развития.
 - `.tasks/` — текущие задачи и архив выполненных задач.
 - `.issues/` — проблемы и инциденты.
 - `.sources/.manifest/` — исходные манифесты, политики и шаблоны.
@@ -51,7 +52,7 @@ python .tools/onboarding/build_integration_bundle.py --output-dir .out --force
 
 ## Ключевые инструменты
 - [`check-all`](.tools/check-all/README.md) — локальный агрегатор проверок.
-- [`onboarding`](.tools/onboarding/README.md) — валидация профиля, перевод режима и пакет интеграции.
+- [`onboarding`](.tools/onboarding/README.md) — подключение репозитория, перевод режима и пакет интеграции.
 - [`plantuml-render`](.tools/plantuml-render/README.md) — рендер PlantUML-диаграмм.
 - [`quality-gates`](.tools/quality-gates/) — пакеты проверок качества.
 - [`reporting`](.tools/reporting/) — генерация отчетов и доказательств (evidence).
